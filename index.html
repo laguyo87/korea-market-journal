@@ -1,0 +1,1477 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>한국 증시 아침 브리핑 일지</title>
+<style>
+  /* ============ 디자인 토큰 ============ */
+  :root{
+    color-scheme: dark;
+    --bg-0:#070a10; --bg-1:#0b0f18;
+    --panel: rgba(21,27,38,.72);
+    --panel-solid:#141a24;
+    --panel-2: rgba(32,40,54,.55);
+    --border: rgba(255,255,255,.08);
+    --border-strong: rgba(255,255,255,.15);
+    --txt:#eef2f8; --sub:#9fb0c6; --mut:#66748a;
+    --up:#ff5a66; --up-bg:rgba(255,90,102,.13); --up-bd:rgba(255,90,102,.32);
+    --down:#4d9bff; --down-bg:rgba(77,155,255,.13); --down-bd:rgba(77,155,255,.32);
+    --accent:#f6c25c; --accent-2:#8a97ff;
+    --ring: 0 0 0 1px var(--border);
+    --shadow: 0 18px 48px -18px rgba(0,0,0,.75);
+    --blur: saturate(160%) blur(14px);
+  }
+  html[data-theme="light"]{
+    color-scheme: light;
+    --bg-0:#e9edf4; --bg-1:#f4f7fb;
+    --panel: rgba(255,255,255,.78);
+    --panel-solid:#ffffff;
+    --panel-2:#eff3f9;
+    --border: rgba(12,22,44,.10);
+    --border-strong: rgba(12,22,44,.18);
+    --txt:#111826; --sub:#465061; --mut:#7c8797;
+    --up:#e02733; --up-bg:rgba(224,39,51,.08); --up-bd:rgba(224,39,51,.22);
+    --down:#1f6fe0; --down-bg:rgba(31,111,224,.08); --down-bd:rgba(31,111,224,.22);
+    --accent:#b8801d; --accent-2:#5763e0;
+    --shadow: 0 18px 40px -20px rgba(28,40,66,.35);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    color:var(--txt);
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Segoe UI",system-ui,sans-serif;
+    line-height:1.62; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    background:
+      radial-gradient(1100px 560px at 12% -12%, rgba(138,151,255,.14), transparent 60%),
+      radial-gradient(900px 460px at 108% -6%, rgba(246,194,92,.10), transparent 58%),
+      radial-gradient(800px 700px at 90% 110%, rgba(77,155,255,.08), transparent 60%),
+      linear-gradient(180deg,var(--bg-0),var(--bg-1));
+    background-attachment:fixed; min-height:100vh;
+  }
+  .tnum{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+  .wrap{max-width:960px;margin:0 auto;padding:0 18px 90px}
+
+  /* ============ 헤더 ============ */
+  header.top{
+    position:sticky;top:0;z-index:20;margin:0 -18px 4px;padding:16px 18px 14px;
+    background:linear-gradient(180deg, var(--bg-0) 40%, transparent);
+    backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  }
+  .top-inner{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:11px;min-width:0}
+  .logo{
+    width:40px;height:40px;border-radius:12px;flex:none;display:grid;place-items:center;font-size:20px;
+    background:linear-gradient(145deg,rgba(246,194,92,.25),rgba(138,151,255,.22));
+    box-shadow:inset 0 0 0 1px var(--border-strong);
+  }
+  .brand h1{font-size:19px;margin:0;letter-spacing:-.4px;font-weight:800;white-space:nowrap}
+  .brand h1 .accent{color:var(--accent)}
+  .brand .sub{display:block;font-size:11.5px;color:var(--mut);font-weight:600;letter-spacing:.2px}
+  .top-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+  .live{
+    display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--sub);font-weight:600;
+    background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:6px 12px;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 0 0 var(--accent-2);animation:pulse 2.2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(138,151,255,.5)}70%{box-shadow:0 0 0 7px rgba(138,151,255,0)}100%{box-shadow:0 0 0 0 rgba(138,151,255,0)}}
+  .tbtn{
+    width:38px;height:38px;border-radius:11px;flex:none;cursor:pointer;font-size:17px;
+    background:var(--panel);border:1px solid var(--border);color:var(--txt);
+    display:grid;place-items:center;transition:.18s;
+  }
+  .tbtn:hover{border-color:var(--border-strong);transform:translateY(-1px)}
+
+  /* ============ 고지 ============ */
+  .disclaimer{
+    display:flex;gap:9px;align-items:flex-start;
+    font-size:12px;color:var(--mut);background:var(--panel);
+    border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin:14px 0 20px;
+  }
+  .disclaimer b{color:var(--sub)}
+
+  /* ============ 오늘의 개장 전망 ============ */
+  .outlook{
+    position:relative;background:var(--panel);border:1px solid var(--border);border-radius:18px;
+    padding:15px 18px 15px 20px;margin:14px 0 20px;box-shadow:var(--shadow);
+    backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);overflow:hidden;
+  }
+  .outlook::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--accent-2),var(--accent))}
+  .ol-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px;flex-wrap:wrap}
+  .ol-title{display:flex;align-items:center;gap:11px}
+  .ol-ic{width:38px;height:38px;border-radius:11px;flex:none;display:grid;place-items:center;font-size:19px;background:linear-gradient(145deg,rgba(138,151,255,.28),rgba(246,194,92,.20));box-shadow:inset 0 0 0 1px var(--border-strong)}
+  .ol-t{font-size:15px;font-weight:800;letter-spacing:-.3px}
+  .ol-sub{font-size:11.5px;color:var(--mut);font-weight:600}
+  .ol-badge{font-size:11px;color:var(--mut);font-weight:700;background:var(--panel-2);border:1px solid var(--border);border-radius:999px;padding:5px 11px;white-space:nowrap}
+  .ol-bars{display:flex;flex-direction:column;gap:10px}
+  .ol-row{display:grid;grid-template-columns:60px 1fr 100px;align-items:center;gap:12px}
+  .ol-name{font-size:13.5px;font-weight:800;color:var(--txt)}
+  .ol-gauge{position:relative;height:22px;border-radius:7px;border:1px solid var(--border);overflow:hidden;background:linear-gradient(90deg,var(--down-bg),transparent 42%,transparent 58%,var(--up-bg))}
+  .ol-center{position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-1px);background:var(--border-strong);z-index:2}
+  .ol-fill{position:absolute;top:3px;bottom:3px;z-index:1;border-radius:5px;transition:width .6s cubic-bezier(.2,.7,.2,1)}
+  .ol-row.up .ol-fill{left:50%;background:linear-gradient(90deg,var(--up-bd),var(--up))}
+  .ol-row.down .ol-fill{right:50%;background:linear-gradient(270deg,var(--down-bd),var(--down))}
+  .ol-val{font-size:15px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .ol-row.up .ol-val{color:var(--up)} .ol-row.down .ol-val{color:var(--down)} .ol-row.flat .ol-val{color:var(--sub)}
+  .ol-cap{font-size:10.5px;color:var(--mut);font-weight:600;text-align:center;margin-top:11px;letter-spacing:.2px}
+  .ol-basis{font-size:12px;color:var(--sub);margin-top:13px;padding-top:11px;border-top:1px dashed var(--border);line-height:1.55}
+  .ol-basis b{color:var(--txt);font-weight:700}
+  .ol-foot{font-size:10.5px;color:var(--mut);margin-top:6px}
+  @media (max-width:520px){
+    .ol-row{grid-template-columns:46px 1fr 82px;gap:8px}
+    .ol-val{font-size:13px}
+  }
+
+  /* ============ 목차 ============ */
+  nav.toc{margin-bottom:24px}
+  nav.toc .t{font-size:11px;color:var(--mut);font-weight:800;letter-spacing:1px;text-transform:uppercase;margin:0 2px 9px}
+  nav.toc .links{display:flex;flex-wrap:wrap;gap:8px}
+  nav.toc .links[hidden]{display:none}
+  nav.toc a{
+    font-size:13px;color:var(--sub);text-decoration:none;font-weight:600;
+    background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:6px 13px;
+    transition:.16s;
+  }
+  nav.toc a:hover{color:var(--txt);border-color:var(--accent);transform:translateY(-1px)}
+  .toc-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 2px 11px;flex-wrap:wrap}
+  .toc-head .t{margin:0;display:inline-flex;align-items:baseline;gap:7px}
+  .toc-hint{color:var(--mut);font-weight:600;font-size:10.5px;text-transform:none;letter-spacing:0}
+  .cal-toggle{font-size:12px;font-weight:700;color:var(--sub);cursor:pointer;background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:6px 13px;transition:.16s}
+  .cal-toggle:hover{color:var(--txt);border-color:var(--accent);transform:translateY(-1px)}
+  .cal-toggle[aria-expanded="true"]{color:var(--txt);border-color:var(--accent-2);background:var(--panel-2)}
+  .cal-pop{margin-top:12px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px;max-width:344px;box-shadow:var(--shadow);animation:reveal .2s ease}
+  .cal-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:11px}
+  .cal-title{font-size:13.5px;font-weight:800;color:var(--txt)}
+  .cal-nav{width:30px;height:30px;border-radius:9px;cursor:pointer;font-size:16px;line-height:1;background:var(--panel-2);border:1px solid var(--border);color:var(--txt);display:grid;place-items:center;transition:.15s}
+  .cal-nav:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+  .cal-nav:disabled{opacity:.28;cursor:default}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .cal-dow{font-size:10.5px;color:var(--mut);font-weight:700;text-align:center;padding:1px 0 5px}
+  .cal-dow.sun{color:var(--up)} .cal-dow.sat{color:var(--down)}
+  .cal-cell{aspect-ratio:1/1;display:grid;place-items:center;font-size:12px;font-weight:600;border-radius:8px;color:var(--mut);position:relative}
+  .cal-cell.empty{visibility:hidden}
+  .cal-cell.has{color:var(--txt);cursor:pointer;background:var(--panel-2);border:1px solid var(--border);transition:.14s}
+  .cal-cell.has:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+  .cal-cell.has::after{content:"";position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--accent-2)}
+  .cal-cell.today{outline:2px solid var(--accent);outline-offset:-2px;color:var(--accent)}
+  .cal-foot{font-size:10.5px;color:var(--mut);margin-top:11px;text-align:center}
+  details.day{scroll-margin-top:84px}
+
+  /* ============ 카드 ============ */
+  details.day{
+    position:relative;background:var(--panel);border:1px solid var(--border);border-radius:20px;
+    margin:0 0 18px;box-shadow:var(--shadow);
+    backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+    overflow:hidden;transition:border-color .2s;
+  }
+  details.day::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:linear-gradient(180deg,var(--accent),var(--accent-2));opacity:.9;
+  }
+  details.day[open]{border-color:var(--border-strong)}
+  details.day>summary{
+    list-style:none;cursor:pointer;padding:17px 20px 17px 22px;
+    display:flex;align-items:center;gap:13px;flex-wrap:wrap;
+  }
+  details.day>summary::-webkit-details-marker{display:none}
+  .chev{width:22px;height:22px;flex:none;display:grid;place-items:center;color:var(--mut);transition:.22s;border-radius:6px}
+  details.day[open] .chev{transform:rotate(90deg);color:var(--accent)}
+  .chev svg{width:13px;height:13px}
+  .date-badge{
+    display:flex;flex-direction:column;line-height:1.15;flex:none;
+    padding-right:14px;margin-right:2px;border-right:1px solid var(--border);
+  }
+  .date-badge .d{font-weight:800;font-size:19px;letter-spacing:-.4px}
+  .date-badge .w{font-size:11px;color:var(--mut);font-weight:700}
+  .headline{color:var(--sub);font-size:13.5px;font-weight:600;flex:1 1 200px;min-width:0}
+  .sum-chips{display:flex;gap:7px;flex-wrap:wrap}
+  .mini{
+    display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;
+    border-radius:8px;padding:4px 9px;border:1px solid var(--border);
+  }
+  .mini .lab{color:var(--mut);font-weight:600}
+  .mini.up{background:var(--up-bg);border-color:var(--up-bd)}
+  .mini.up .v{color:var(--up)}
+  .mini.down{background:var(--down-bg);border-color:var(--down-bd)}
+  .mini.down .v{color:var(--down)}
+
+  .body{padding:2px 20px 22px 22px;animation:reveal .32s ease}
+  @keyframes reveal{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+  section.block{padding:16px 0;border-top:1px solid var(--border)}
+  section.block h3{
+    font-size:14px;margin:0 0 13px;color:var(--txt);font-weight:800;letter-spacing:-.2px;
+    display:flex;align-items:center;gap:9px;
+  }
+  section.block h3 .k{font-size:11px;color:var(--mut);font-weight:700;background:var(--panel-2);border:1px solid var(--border);padding:2px 8px;border-radius:6px}
+
+  /* 지수 타일 */
+  .idx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:11px;margin-bottom:6px}
+  .idx{position:relative;background:var(--panel-2);border:1px solid var(--border);border-radius:14px;padding:13px 14px;overflow:hidden}
+  .idx::after{content:"";position:absolute;inset:auto -20% -60% auto;width:120px;height:120px;border-radius:50%;opacity:.16;filter:blur(6px)}
+  .idx.up::after{background:var(--up)}
+  .idx.down::after{background:var(--down)}
+  .idx-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+  .idx .nm{font-size:12px;color:var(--sub);font-weight:600}
+  .idx .arw{font-size:12px;font-weight:900}
+  .idx.up .arw,.idx.up .chg-pct{color:var(--up)}
+  .idx.down .arw,.idx.down .chg-pct{color:var(--down)}
+  .idx .val{font-size:22px;font-weight:800;letter-spacing:-.6px;line-height:1.1}
+  .chg-row{display:flex;align-items:baseline;gap:8px;margin-top:5px;font-size:12.5px;font-weight:700}
+  .chg-row .chg-pt{color:var(--mut)}
+  .idx.flat .arw,.idx.flat .chg-pct{color:var(--sub)}
+
+  /* 수급 */
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:4px 0 2px}
+  .flow .f{background:var(--panel-2);border:1px solid var(--border);border-radius:13px;padding:11px 13px}
+  .flow .f .lab{color:var(--sub);font-size:11px;font-weight:600;display:block;margin-bottom:3px}
+  .flow .f .amt{font-size:16px;font-weight:800;letter-spacing:-.3px}
+  .flow .f .note{color:var(--mut);font-size:11px;font-weight:600}
+  .flow .f.buy .amt{color:var(--up)} .flow .f.sell .amt{color:var(--down)}
+
+  /* 종목 칩 */
+  .stocks{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 2px}
+  .stk{
+    display:inline-flex;align-items:center;gap:7px;background:var(--panel-2);border:1px solid var(--border);
+    border-radius:10px;padding:6px 11px;font-size:13px;font-weight:600;
+  }
+  .stk b{font-weight:800}
+  .stk .up{color:var(--up)} .stk .down{color:var(--down)}
+  .tag-out{font-size:10px;color:var(--accent);border:1px solid var(--accent);border-radius:6px;padding:0 5px;font-weight:700;margin-left:2px}
+
+  /* 노트 */
+  ul.notes{margin:12px 0 0;padding:0;list-style:none}
+  ul.notes li{position:relative;margin:8px 0;color:var(--sub);font-size:13.5px;padding-left:20px}
+  ul.notes li::before{content:"";position:absolute;left:4px;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent-2);opacity:.8}
+  ul.notes li b,ul.notes li strong{color:var(--txt);font-weight:700}
+  .kv{font-size:13.5px;color:var(--sub)} .kv b{color:var(--txt);font-weight:700}
+  .up{color:var(--up)} .down{color:var(--down)}
+
+  footer.bot{margin-top:36px;padding-top:18px;border-top:1px solid var(--border);color:var(--mut);font-size:12px;text-align:center;line-height:1.8}
+  @media (max-width:520px){
+    .brand h1{font-size:17px}
+    .date-badge{border-right:none;padding-right:0}
+    .headline{flex-basis:100%;order:5}
+    .idx .val{font-size:20px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="top-inner">
+      <div class="brand">
+        <div class="logo">📈</div>
+        <div>
+          <h1>한국 증시 <span class="accent">아침 브리핑</span></h1>
+          <span class="sub">KOSPI · KOSDAQ · 개장 전 데일리 리포트</span>
+        </div>
+      </div>
+      <div class="top-right">
+        <span class="live"><span class="dot"></span>개장 1시간 전</span>
+        <button class="tbtn" id="themeBtn" onclick="toggleTheme()" aria-label="테마 전환">☀️</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- OUTLOOK_START :: 매일 자동 갱신 구역. 아래 <section>의 data-date / data-kospi / data-kosdaq / data-basis 4개 값만 오늘 데이터로 교체하면 막대그래프가 자동으로 다시 그려짐. data-kospi·data-kosdaq = 오늘 예상 등락률(%)을 부호 포함 숫자로(상승 +, 하락 -). -->
+  <section class="outlook" id="outlook"
+           data-date="8/10 (월)"
+           data-kospi="0.76"
+           data-kosdaq="1.11"
+           data-basis="간밤 뉴욕 <b>나스닥 +1.30%</b>·반도체 주간 +7% 강세를 국내가 아직 미반영 → <b>갭 상승</b> 출발 예상. 미 7월 고용 쇼크로 금리 인상 기대 후퇴·<b>달러 약세(원/달러 1,410원대)</b>, 삼성전자·SK하이닉스 동반 강세 기대. 다만 장중 되밀림 주의.">
+    <div class="ol-head">
+      <div class="ol-title">
+        <span class="ol-ic">🧭</span>
+        <div>
+          <div class="ol-t">오늘의 개장 전망</div>
+          <div class="ol-sub" id="olDate">— · 추정치</div>
+        </div>
+      </div>
+      <span class="ol-badge">개장 전 추정 · 투자권유 아님</span>
+    </div>
+    <div class="ol-bars" id="olBars"></div>
+    <div class="ol-cap">◀ 하락 예상 &nbsp;·&nbsp; 상승 예상 ▶ &nbsp;&nbsp;(눈금 ±2.5%)</div>
+    <div class="ol-basis" id="olBasis"></div>
+    <div class="ol-foot">※ 야간선물·간밤 미국증시 등 개장 전 지표에 근거한 추정이며 실제 시가·종가와 다를 수 있습니다.</div>
+  </section>
+  <!-- OUTLOOK_END -->
+
+  <div class="disclaimer">
+    <span>⚠️</span>
+    <span>본 일지는 <b>투자 참고용</b>이며 특정 종목의 매수·매도 권유가 아닙니다. 수치는 조사 시점 기준으로 오차가 있을 수 있으며, 최종 판단과 책임은 투자자 본인에게 있습니다.</span>
+  </div>
+
+  <nav class="toc" id="toc">
+    <div class="toc-head">
+      <div class="t">날짜별 바로가기 <span class="toc-hint" id="tocHint"></span></div>
+      <button class="cal-toggle" id="calToggle" type="button" aria-expanded="false">📅 달력에서 찾기</button>
+    </div>
+    <!-- 최근 며칠 빠른 링크: JS(buildNav)가 아래 카드들에서 자동 생성 -->
+    <div class="links" id="tocRecent"></div>
+    <!-- 달력 팝오버: 전체 날짜 선택 -->
+    <div class="cal-pop" id="calPop" hidden>
+      <div class="cal-head">
+        <button class="cal-nav" id="calPrev" type="button" aria-label="이전 달">‹</button>
+        <div class="cal-title" id="calTitle">—</div>
+        <button class="cal-nav" id="calNext" type="button" aria-label="다음 달">›</button>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="cal-foot">날짜를 선택하면 해당 브리핑으로 이동합니다</div>
+    </div>
+    <!-- 자바스크립트 미실행 시 대체 목록(자동화가 TOC_INSERT 뒤에 계속 추가). JS 실행 시 숨겨짐 -->
+    <div class="links toc-fallback" id="tocFallback">
+      <!-- TOC_INSERT -->
+      <a href="#d-2026-08-10">8/10 (월)</a>
+      <a href="#d-2026-08-07">8/7 (금)</a>
+      <a href="#d-2026-08-06">8/6 (목)</a>
+      <a href="#d-2026-08-05">8/5 (수)</a>
+      <a href="#d-2026-08-04">8/4 (화)</a>
+      <a href="#d-2026-08-03">8/3 (월)</a>
+      <a href="#d-2026-07-31">7/31 (금)</a>
+      <a href="#d-2026-07-30">7/30 (목)</a>
+      <a href="#d-2026-07-29">7/29 (수)</a>
+      <a href="#d-2026-07-28">7/28 (화)</a>
+      <a href="#d-2026-07-27">7/27 (월)</a>
+      <a href="#d-2026-07-24">7/24 (금)</a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ENTRY_INSERT -->
+    <details class="day" open id="d-2026-08-10">
+      <summary>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        <span class="date-badge"><span class="d">8/10</span><span class="w">월요일</span></span>
+        <span class="headline">'나쁜 고용이 좋은 뉴스'였음 — 7월 비농업 고용 -2.3만명(예상 +8.3만명) 쇼크에 금리 인상론이 무너지며 S&amp;P 500 사상 최고 7,757.64 · 나스닥 +1.30% · 주간 나스닥 +5.2% · 국내는 이 반전을 못 본 채 코스피 -0.60% 6,258.77로 7주 연속 하락 마감 · 오늘은 미반영 호재의 갭업 여부와 외국인 복귀가 관건</span>
+        <span class="sum-chips">
+          <span class="mini down"><span class="lab">코스피</span><span class="v">-0.60%</span></span>
+          <span class="mini down"><span class="lab">코스닥</span><span class="v">-0.36%</span></span>
+        </span>
+      </summary>
+      <div class="body">
+
+        <section class="block">
+          <h3>🌙 간밤 미국 증시 <span class="k">8/7(금) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx up"><div class="idx-top"><span class="nm">다우존스</span><span class="arw">▲</span></div><div class="val tnum">54,036.93</div><div class="chg-row"><span class="chg-pt tnum">+151.83</span><span class="chg-pct tnum">+0.28%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">S&amp;P 500</span><span class="arw">▲</span></div><div class="val tnum">7,757.64</div><div class="chg-row"><span class="chg-pt tnum">+47.68</span><span class="chg-pct tnum">+0.62%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">나스닥</span><span class="arw">▲</span></div><div class="val tnum">26,690.62</div><div class="chg-row"><span class="chg-pt tnum">+342.26</span><span class="chg-pct tnum">+1.30%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">WTI 유가</span><span class="arw">▲</span></div><div class="val tnum">$78.18</div><div class="chg-row"><span class="chg-pt tnum">+0.89</span><span class="chg-pct tnum">+1.15%</span></div></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">엔비디아 <b class="up">+2.27%</b></span>
+            <span class="stk">테슬라 <b class="up">+2.83%</b></span>
+            <span class="stk">아마존 <b class="up">+0.82%</b></span>
+            <span class="stk">미 10년물 <b class="down">4.62%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>금요일 카드가 '이번 주 최대 관문'이라 적었던 7월 고용보고서가 시장을 정반대로 뒤집었음.</b> <b>비농업 고용이 2만 3,000명 감소</b>. 시장 예상은 <b>+8만 3,000명</b>이었으므로 <b>10만 명 넘는 괴리</b>였고, 증가폭 둔화가 아니라 <b>순감소로의 전환</b>이었음. 실업률은 <b>4.1%</b>. 더 무거운 대목은 <b>과거치 하향 조정</b> — 6월이 <b>+5만 7,000명 → +2만 명</b>, 5월이 <b>+12만 9,000명 → +6만 3,000명</b>으로 내려앉았음. 즉 <b>7월 한 달의 사고가 아니라 봄부터 이어진 둔화가 뒤늦게 드러난</b> 구조.</li>
+            <li><b>그런데 증시는 올랐음. 그것도 크게.</b> 다우 <b>54,036.93(+151.83p, +0.28%)</b>, S&amp;P 500 <b>7,757.64(+47.68p, +0.62%)로 사상 최고 종가</b>, 나스닥 <b>26,690.62(+342.26p, +1.30%)</b>. 논리는 단순함 — 최근 시장을 짓눌러온 게 <b>'9월 FOMC 금리 인상' 가능성</b>이었는데, 고용이 순감소로 돌아서면서 <b>인상 시나리오가 사실상 지워진</b> 것. <b>경기 지표의 악화가 곧 금리 부담의 소멸</b>로 번역된 전형적인 국면.</li>
+            <li><b>채권과 달러가 그 해석을 확인해줬음.</b> 정책 민감도가 높은 <b>2년물이 약 8bp 급락해 4.16~4.17%</b>, <b>10년물은 4.67% → 4.62%</b>로 내려왔고 <b>달러는 0.4% 약세</b>. 금요일 카드에서 <b>'10년물 4.67%에서 맞는 지표라 강한 고용이 특히 위험'</b>이라고 적었던 경로의 <b>정확히 반대편</b>이 실현된 셈이며, 이 조합(<b>금리 하락 + 달러 약세</b>)은 통상 <b>신흥국·한국 증시에 가장 우호적인 세팅</b>임.</li>
+            <li><b>주간 단위로 보면 더 극적임.</b> 나스닥은 한 주 동안 <b>+5.2%</b>, S&amp;P 500은 <b>4월 이후 최강의 주간</b>을 기록했음. 특히 <b>반도체가 주간 상승을 주도</b>해 <b>반도체 ETF(SOXX)가 주간 +7% 이상</b>, <b>엔비디아는 주간 +10% 이상</b>. 금요일 당일로도 <b>엔비디아 +2.27% · 테슬라 +2.83% · 아마존 +0.82% · 메타 +0.37% · 애플 +0.29% · 마이크로소프트 +0.03%</b>로 대형 기술주가 고르게 올랐음.</li>
+            <li><b>여기서 이번 카드의 핵심 비대칭이 발생함.</b> 국내 증시는 <b>금요일 오후 3시 30분에 이미 마감</b>했고, 고용지표는 <b>그날 밤에 나왔음</b>. 즉 <b>미국의 반전 랠리와 반도체 급반등을 한국 시장은 아직 한 번도 반영하지 못한 상태</b>. 금요일 카드가 <b>"결과를 확인하지 못한 채 주말을 넘겨야 함"</b>이라고 적었던 그 주말 갭이, 이번에는 <b>상방으로</b> 벌어진 채 오늘 아침을 맞았음.</li>
+            <li><b>다만 유가는 여전히 반대편에 서 있음.</b> WTI가 <b>$78.18(+1.15%)</b>, 브렌트가 <b>$83.55(+1.29%)</b>로 이틀 연속 올랐음. <b>호르무즈 통항</b>을 둘러싼 이란 측 움직임이 계속 프리미엄을 얹고 있는 상황이며, <b>금리는 내려오는데 유가는 올라가는</b> 엇갈린 조합은 <b>오는 12일 미국 7월 CPI</b>를 앞두고 부담 요인으로 남음.</li>
+            <li><b>정리하면 간밤 뉴욕은 '지표는 최악, 해석은 최상'이었던 하루.</b> 고용의 절대 숫자는 <b>노동시장이 실제로 식고 있다</b>는 신호이므로, 이번 랠리는 <b>펀더멘털 개선이 아니라 금리 경로 재조정</b>에 기댄 것임. <b>경기 둔화가 확인되는 국면에서 주가만 먼저 오르는</b> 구간은 그 자체로 되돌림 위험을 안고 있다는 점은 전제로 깔아두는 편이 안전함.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>📊 코스피 · 코스닥 <span class="k">8/7(금) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx down"><div class="idx-top"><span class="nm">코스피</span><span class="arw">▼</span></div><div class="val tnum">6,258.77</div><div class="chg-row"><span class="chg-pt tnum">-37.61</span><span class="chg-pct tnum">-0.60%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">코스닥</span><span class="arw">▼</span></div><div class="val tnum">798.81</div><div class="chg-row"><span class="chg-pt tnum">-2.86</span><span class="chg-pct tnum">-0.36%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">원/달러 환율</span><span class="arw">▼</span></div><div class="val tnum">1,416.1</div><div class="chg-row"><span class="chg-pt tnum">-7.7원</span><span class="chg-pct">이틀 연속 하락</span></div></div>
+          </div>
+          <div class="kv" style="margin:8px 0 12px">금요일 카드가 <b>1순위 변수</b>로 꼽았던 <b>'외국인이 이틀 연속 파는가'</b>에 대한 답은 <b>그렇다, 다만 규모는 10분의 1로 줄었다</b>였음. 코스피는 <b>6,258.77(-37.61p, -0.60%)</b>로 <b>전날 -4.58% 급락 대비 낙폭이 크게 축소</b>됐지만 <b>6,300선 회복에는 실패</b>. 코스닥은 <b>798.81(-0.36%)</b>로 <b>전날 되찾았던 800선을 하루 만에 반납</b>했고, <b>5거래일 연속 상승·디커플링 흐름도 함께 끊겼음</b>.</div>
+          <div class="flow">
+            <div class="f sell"><span class="lab">외국인 · 코스피</span><span class="amt tnum">-8,590억</span><span class="note">이틀 연속 매도, 전날 3.3조 대비 대폭 축소</span></div>
+            <div class="f buy"><span class="lab">기관 · 코스피</span><span class="amt tnum">+5,791억</span><span class="note">전날 순매도에서 매수 전환</span></div>
+            <div class="f buy"><span class="lab">개인 · 코스닥</span><span class="amt tnum">+3,406억</span><span class="note">코스닥 하락분을 개인이 흡수</span></div>
+            <div class="f sell"><span class="lab">외국인 · 코스닥</span><span class="amt tnum">-2,540억</span><span class="note">기관도 -1,030억으로 동반 매도</span></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">삼성전자 <b class="up">+0.22%</b></span>
+            <span class="stk">SK하이닉스 <b class="down">-4.88%</b></span>
+            <span class="stk">주간 코스피 <b class="down">-5.10%</b></span>
+            <span class="stk">주간 연속 <b class="down">7주 하락</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>투톱이 정확히 갈라섰다는 점이 이날의 핵심.</b> <b>삼성전자는 231,000원(+0.22%)</b>으로 <b>반등</b>했고, <b>SK하이닉스는 1,422,000원(-4.88%)</b>으로 <b>이틀 연속 급락</b>했음. 전날 <b>-10.37%</b>에 이어 이틀간 누적 낙폭이 <b>15%에 육박</b>. 목요일에는 두 종목이 <b>-6.30% / -10.37%</b>로 <b>함께</b> 빠졌는데, 금요일에는 <b>한쪽만</b> 빠졌음. <b>'반도체 전체의 문제'에서 'HBM 노출도의 문제'로 좁혀진</b> 것이 이날 확인된 변화.</li>
+            <li><b>SK하이닉스만 빠진 이유는 엔비디아발 HBM 사양 조정 이슈였음.</b> 엔비디아가 차세대 <b>'루빈 울트라'</b>의 메모리 구성을 당초 기본 설계였던 <b>12단 적층 HBM4e</b> 대신 <b>8단 HBM4e · 12단 HBM4 · 8단 HBM4</b> 등 <b>사양을 낮춘 대안</b>으로 검토 중이라는 소식. 배경은 <b>2027년까지 이어질 D램 부족</b>과 <b>12단 HBM4e의 수율·검증 일정 불확실성</b>이며, 시장은 이를 <b>HBM 공급가·믹스 하향 리스크</b>로 읽었음. <b>HBM 노출도가 가장 높은 종목</b>이 가장 크게 맞은 구조.</li>
+            <li><b>악재가 겹쳐 있었다는 점도 감안할 필요가 있음.</b> ① 위 <b>HBM 사양 조정</b>, ② <b>주주환원 정책에 대한 실망</b>, ③ 미국 낸드 자회사 <b>솔리다임의 나스닥 IPO 관련 루머</b>, ④ 간밤 <b>SK하이닉스 ADR -4.97%</b>. 즉 <b>단일 악재가 아니라 네 겹</b>이었고, 이 중 <b>주주환원</b>은 뒤에 나오듯 <b>이번 주에 해소 시도가 예정된</b> 항목임.</li>
+            <li><b>수급의 강도는 확실히 꺾였음.</b> 외국인 코스피 순매도가 <b>-3조 3,285억(8/6) → -8,590억(8/7)</b>으로 <b>4분의 1 수준</b>으로 줄었고, <b>기관은 +5,791억으로 매수 전환</b>했음. 최근 흐름은 <b>+7.6조(7/31) → -2.8조(8/3) → -0.65조(8/4) → +1.45조(8/5) → -3.33조(8/6) → -0.86조(8/7)</b>. <b>방향은 여전히 매도지만 진폭은 급격히 수축</b>했다는 점이 기록해 둘 대목.</li>
+            <li><b>주간 성적표는 냉정하게 나빴음.</b> 코스피는 <b>6,595.45 → 6,258.77</b>로 한 주간 <b>-336.68p(-5.10%)</b>, <b>주간 기준 7주 연속 하락</b>. <b>6월 22일 고점 9,114.55 대비로는 -31.3%</b>. 주간 수급은 코스피에서 <b>외국인 -5조 9,391억 · 기관 -2조 3,099억 · 개인 +7조 8,908억</b>(코스닥 포함 시 외국인 순매도 약 <b>7조 1,820억</b>)로, <b>개인이 홀로 받아내는 구조</b>가 한 주 내내 이어졌음.</li>
+            <li><b>다만 '지수 = 반도체'라는 착시는 걷어낼 필요가 있음.</b> 지난주 코스피가 <b>-5.10%</b>인 동안 <b>동일가중지수는 +1.2%</b>, <b>중소형주도 +0.6~0.8%</b> 상승했음. 즉 <b>시총 상위 반도체 두 종목이 지수 전체를 끌어내린</b> 것이지 <b>시장 전반이 무너진 게 아니었음</b>. 증권가가 이번 조정을 <b>실적 악화가 아니라 차익 실현·밸류에이션 부담</b>으로 규정하는 근거이기도 함.</li>
+            <li><b>환율은 이틀째 안정적이었음.</b> 원/달러는 <b>1,416.1원(-7.7원)</b>으로 <b>1,420원 아래</b>로 내려왔음. 외국인이 이틀간 <b>4조 넘게 순매도</b>했는데도 환율이 오히려 <b>내린</b> 것이며, 간밤 <b>달러 0.4% 약세</b>까지 감안하면 오늘은 <b>추가 하락 압력</b>이 우세한 출발이 예상되는 구도. <b>환율 하락은 외국인 재유입의 필요조건</b>이라는 점에서 긍정적 신호로 읽을 수 있음.</li>
+            <li><b>코스닥의 800선은 결국 하루짜리였음.</b> <b>801.67(8/6) → 798.81(8/7)</b>. 금요일 카드가 던졌던 질문 — <b>'코스닥 강세가 반도체 회피 자금의 피난처였나, 독립적 흐름이었나'</b> — 에 대해 <b>코스피 낙폭이 줄어든 날 코스닥이 함께 빠졌다</b>는 답이 나왔으므로, <b>피난처 성격이 강했다</b>는 해석에 무게가 실림. 삼성증권은 코스닥이 <b>120월 이동평균선(약 800p)</b>에 닿았다는 점을 별도로 짚었음.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>🔎 오늘의 관전 포인트 <span class="k">8/10(월)</span></h3>
+          <ul class="notes">
+            <li><b>오늘 최대 관전 포인트는 '미반영 호재를 얼마나 반영하는가'.</b> 국내 시장은 <b>고용 쇼크 → 금리 인상론 소멸 → 나스닥 +1.30% · 반도체 주간 +7% · 엔비디아 주간 +10%</b>라는 흐름을 <b>단 한 번도 가격에 넣지 못한 채</b> 주말을 넘겼음. 산술적으로는 <b>갭업 출발</b>이 자연스러운 조건이지만, 지난주 내내 <b>장 초반 강세가 장중 되밀리는</b> 패턴이 반복됐다는 점에서 <b>시가보다 종가</b>를 확인하는 편이 안전함.</li>
+            <li><b>SK하이닉스가 이틀 연속 급락을 되돌리는지가 지수의 1순위 변수.</b> 간밤 미국 반도체가 <b>주간 기준 +7% 이상</b> 반등했지만, SK하이닉스를 눌렀던 <b>엔비디아 루빈 울트라 HBM 사양 하향 검토</b>는 <b>업황이 아니라 개별 종목의 단가·믹스</b>에 직결되는 재료라 <b>지수 반등과 별개로 움직일 수 있음</b>. <b>삼성전자와의 디커플링이 이어지는지</b>가 판단 기준이 됨.</li>
+            <li><b>이번 주 최대 이벤트는 12일(현지시간) 미국 7월 CPI.</b> 블룸버그 컨센서스는 <b>헤드라인 전년비 +3.5%, 근원 +2.5%</b>. 고용 쇼크로 <b>금리 인상 우려가 걷힌 상태</b>이므로, <b>물가가 컨센을 넘으면</b> 이 완화가 하루 만에 뒤집힐 수 있는 구조. 특히 <b>7월 중 국제유가 급등</b>이 물가에 얼마나 반영됐는지가 관건이며, <b>13일에는 7월 PPI</b>가 이어짐.</li>
+            <li><b>13일은 지표 외에도 수급 이벤트가 겹치는 날.</b> <b>미국 7월 PPI · MSCI 분기 리뷰 · 코스피 옵션 만기</b>가 같은 날에 몰려 있음. <b>지수 편출입에 따른 패시브 자금</b>과 <b>만기 프로그램 매물</b>이 동시에 작동할 수 있는 구간이므로, <b>주 중반의 변동성이 주 초반보다 클 가능성</b>을 염두에 둘 필요가 있음.</li>
+            <li><b>외국인 복귀의 트리거로 '주주환원'이 지목되고 있음.</b> 증권가는 <b>실적보다 주주환원·제도 개선 같은 새로운 촉매</b>가 있어야 외국인 자금이 돌아온다고 보고 있음. <b>SK하이닉스는 보통주 1주당 375원 분기 배당</b>을 이미 결정했고, <b>삼성전자와 SK하이닉스가 주주환원 확대 방안을 마련해 공개할 예정</b>이라는 보도(로이터)가 나온 상태. 금요일 SK하이닉스 급락 요인 중 하나가 <b>주주환원 실망</b>이었던 만큼, <b>같은 재료가 이번 주에는 반대로 작동할 여지</b>가 있음.</li>
+            <li><b>증권가가 제시한 이번 주 코스피 밴드는 6,000~6,700.</b> 금요일 종가 <b>6,258.77</b> 기준으로 <b>위로 약 7%, 아래로 약 4%</b>가 열려 있다는 뜻이며, <b>여전히 넓은 밴드</b>임. 하나증권은 <b>VKOSPI가 76p로 낮아졌고 코스피 저점(5,594p)이 형성됐다</b>며 <b>변동성 고점 통과</b>를 주장했고, KB증권은 <b>금리 안정과 새로운 내러티브</b>를 추세 반등의 전제조건으로 제시했음. 간밤 <b>10년물 4.62%</b>는 이 중 <b>첫 번째 조건</b>이 일부 충족됐음을 뜻함.</li>
+            <li><b>코스닥 800선 공방이 두 번째 기술적 기준선.</b> 금요일 <b>798.81</b>로 다시 내준 상태이며, 삼성증권은 이 지점이 <b>120월 이동평균선</b>이라는 점을 짚었음. 지난주 <b>동일가중지수 +1.2% · 중소형주 +0.6~0.8%</b>였던 흐름이 이어진다면 <b>지수와 무관하게 개별 종목 장세</b>가 계속될 수 있는 구간.</li>
+            <li><b>환율 1,416원에서 더 내려가는지도 체크 포인트.</b> 간밤 <b>달러 0.4% 약세 · 미 10년물 4.62%</b>라는 조합은 원화에 우호적임. <b>1,410원선을 하향 돌파</b>하면 외국인 순매수 전환의 <b>실질적 신호</b>로 볼 여지가 생기고, 반대로 <b>환율이 안 내려가면</b> 간밤 미국 랠리에도 외국인이 돌아오지 않고 있다는 <b>역방향 증거</b>가 됨.</li>
+            <li><b>유가·중동은 여전히 반대편 리스크로 남아 있음.</b> WTI <b>$78.18(+1.15%) · 브렌트 $83.55(+1.29%)</b>로 이틀 연속 상승했고, <b>호르무즈 통항 제한</b> 이슈가 계속 프리미엄을 얹고 있음. <b>금리는 내려가는데 유가는 올라가는</b> 조합은 <b>12일 CPI</b>에서 부딪히게 되며, 이 경우 <b>정유·조선·에너지에 순풍, 항공·운송·화학에 역풍</b>이라는 구도가 유지됨.</li>
+            <li><b>마지막으로, 이번 랠리의 성격을 잊지 않는 편이 좋음.</b> 간밤 상승의 동력은 <b>기업 실적 개선이 아니라 고용 악화</b>였음. <b>7월 -2.3만명 · 5~6월 대폭 하향 조정 · 소매(-1.9만) · 금융(-1.4만)</b>은 <b>실물 둔화의 증거</b>이며, 지금은 <b>금리 안도가 경기 우려를 압도</b>하고 있을 뿐임. 이 우선순위는 <b>CPI 결과 하나로 뒤집힐 수 있는</b> 종류의 것이므로, 오늘 반등이 나오더라도 <b>추세 전환으로 단정하기 전에 12~13일을 통과</b>해야 함. <b>본 일지는 투자 참고용이며 특정 종목의 매수·매도 권유가 아님.</b></li>
+          </ul>
+        </section>
+
+      </div>
+    </details>
+
+    <details class="day" id="d-2026-08-07">
+      <summary>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        <span class="date-badge"><span class="d">8/7</span><span class="w">금요일</span></span>
+        <span class="headline">어제 관전 포인트의 답은 '주가'였다 — 샌디스크 가이던스 쇼크에 SK하이닉스 -10.37%·삼성전자 -6.30%, 외국인 3.3조 순매도로 코스피 -4.58% 6,296.38 · 매도 사이드카 발동 · 코스닥만 홀로 +0.26%로 15거래일 만에 800선 회복 · 오늘 밤 미국 7월 고용보고서</span>
+        <span class="sum-chips">
+          <span class="mini down"><span class="lab">코스피</span><span class="v">-4.58%</span></span>
+          <span class="mini up"><span class="lab">코스닥</span><span class="v">+0.26%</span></span>
+        </span>
+      </summary>
+      <div class="body">
+
+        <section class="block">
+          <h3>🌙 간밤 미국 증시 <span class="k">8/6(목) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx down"><div class="idx-top"><span class="nm">다우존스</span><span class="arw">▼</span></div><div class="val tnum">53,885.10</div><div class="chg-row"><span class="chg-pt tnum">-464.02</span><span class="chg-pct tnum">-0.85%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">S&amp;P 500</span><span class="arw">▼</span></div><div class="val tnum">7,709.96</div><div class="chg-row"><span class="chg-pt tnum">-13.59</span><span class="chg-pct tnum">-0.18%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">나스닥</span><span class="arw">▼</span></div><div class="val tnum">26,348.35</div><div class="chg-row"><span class="chg-pt tnum">-15.09</span><span class="chg-pct tnum">-0.06%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">WTI 유가</span><span class="arw">▲</span></div><div class="val tnum">$77.29</div><div class="chg-row"><span class="chg-pt tnum">+2.07</span><span class="chg-pct tnum">+2.75%</span></div></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">웨스턴디지털 <b class="down">-13.03%</b></span>
+            <span class="stk">앱러빈 <b class="down">-19.66%</b></span>
+            <span class="stk">샌디스크 <b class="down">-6.81%</b></span>
+            <span class="stk">미 10년물 <b class="up">4.67%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>3대 지수가 모처럼 나란히 내렸음.</b> 다우 <b>53,885.10(-464.02p, -0.85%)</b>로 <b>5거래일 연속 상승·3거래일 연속 사상 최고 기록이 동시에 끊겼고</b>, S&amp;P 500 <b>7,709.96(-0.18%)</b>, 나스닥 <b>26,348.35(-15.09p, -0.06%)</b>. 다만 <b>낙폭의 주인공이 바뀐 점</b>이 중요함 — 전날 기술주가 빠지고 다우가 올랐다면, 이번엔 <b>다우가 가장 크게 밀리고 나스닥은 거의 보합</b>이었음. 전날의 로테이션이 <b>하루 만에 되돌려진</b> 셈.</li>
+            <li><b>원인은 어제 카드에서 '우호적으로 고정'이라 적었던 두 변수가 동시에 뒤집힌 것.</b> <b>유가와 금리</b>. WTI 9월물이 <b>$77.29(+2.75%)</b>, 브렌트가 <b>$82.49(+3.83%)</b>로 급등했고, 미 10년물은 <b>4.62% → 4.67%</b>, 30년물은 <b>5.21%</b>까지 올라섰음. 사흘간 이어지던 <b>'유가·금리 동시 안정'</b> 국면이 <b>단 하루에 해소</b>됐음.</li>
+            <li><b>유가를 밀어올린 건 다시 호르무즈였음.</b> <b>이란 의회 위원회가 미국·이스라엘 등 '적대국' 선박의 호르무즈 해협 통항을 제한하는 예비 법안을 심사</b> 중이라는 소식. 초안에는 위반 선박에 <b>화물 가치의 최대 20%를 벌금</b>으로 부과하는 조항까지 포함됐음. 불과 이틀 전 <b>'미국·이란·오만의 통항 잠정 합의'</b> 보도로 유가가 눌렸던 것과 <b>정반대 방향</b>이며, 장중에는 <b>WTI +3.4%($77.78) · 브렌트 +4.1%($82.72)</b>까지 튀었음. <b>지정학 프리미엄이 해소된 게 아니라 잠시 접혔던 것</b>임이 확인된 하루.</li>
+            <li><b>메모리 쪽은 이틀째 '좋은 실적, 나쁜 주가'가 이어졌음.</b> 어제 시간외에서 -7.29%였던 <b>샌디스크가 정규장에서 -6.81%</b>로 확정됐고, 더 큰 충격은 <b>웨스턴디지털 -13.03%</b>였음. 매출 <b>+372%·총마진 84.6%</b>라는 숫자에도 시장은 <b>다음 분기 가이던스 $103~108억이 컨센($108~111억)에 미달</b>한 쪽만 봤음. <b>필라델피아 반도체지수(SOX)도 1.4% 하락</b>.</li>
+            <li><b>실적 실망 매물은 메모리 밖으로도 번졌음.</b> <b>앱러빈 -19.66%</b>, <b>세일즈포스 -3.22%</b>. 반대로 <b>스페이스X는 +6.14%</b>로 반등해, 전날 -13.6% 급락분을 일부 되돌렸음.</li>
+            <li><b>정리하면 간밤 뉴욕은 '지수는 조금, 개별 종목은 크게' 빠진 장이었음.</b> 지수 낙폭만 보면 <b>-0.06~-0.85%</b>로 평범하지만, <b>WDC -13% · APP -19.66%</b> 같은 두 자릿수 낙폭이 곳곳에서 나왔음. <b>지수 뒤에 숨은 개별 종목의 변동성</b>이 국내 반도체 투톱에 그대로 전달됐다는 점이 오늘 카드의 핵심 연결 고리.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>📊 코스피 · 코스닥 <span class="k">8/6(목) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx down"><div class="idx-top"><span class="nm">코스피</span><span class="arw">▼</span></div><div class="val tnum">6,296.38</div><div class="chg-row"><span class="chg-pt tnum">-301.88</span><span class="chg-pct tnum">-4.58%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">코스닥</span><span class="arw">▲</span></div><div class="val tnum">801.67</div><div class="chg-row"><span class="chg-pt tnum">+2.08</span><span class="chg-pct tnum">+0.26%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">원/달러 환율</span><span class="arw">▼</span></div><div class="val tnum">1,423.8</div><div class="chg-row"><span class="chg-pt tnum">-0.7원</span><span class="chg-pct">급락장에도 환율은 잠잠</span></div></div>
+          </div>
+          <div class="kv" style="margin:8px 0 12px">어제 카드가 <b>1순위 변수</b>로 꼽았던 <b>'국내 투톱이 샌디스크의 숫자를 볼지 주가를 볼지'</b>에 시장은 <b>주가</b>라고 답했음. 코스피는 <b>6,296.38(-301.88p, -4.58%)</b>로 <b>6,300선을 내주며</b> 마감했고, 오전 <b>10시 18분 매도 사이드카</b>까지 발동. 다만 <b>코스닥은 801.67(+0.26%)</b>로 <b>15거래일 만에 800선을 회복</b>하며 정반대로 움직였다는 점이 이날의 가장 특이한 대목.</div>
+          <div class="flow">
+            <div class="f sell"><span class="lab">외국인 · 코스피</span><span class="amt tnum">-3조 3,285억</span><span class="note">하루 만에 1.45조 순매수 되돌림</span></div>
+            <div class="f buy"><span class="lab">개인 · 코스피</span><span class="amt tnum">+3조 3,412억</span><span class="note">외국인 물량 사실상 전량 소화</span></div>
+            <div class="f sell"><span class="lab">기관 · 코스피</span><span class="amt tnum">-1,229억</span><span class="note">매도 규모는 미미</span></div>
+            <div class="f buy"><span class="lab">기관 · 코스닥</span><span class="amt tnum">+1,614억</span><span class="note">개인 +858억 / 외국인 -2,480억</span></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">삼성전자 <b class="down">-6.30%</b></span>
+            <span class="stk">SK하이닉스 <b class="down">-10.37%</b></span>
+            <span class="stk">SK스퀘어 <b class="down">-13.32%</b></span>
+            <span class="stk">알테오젠 <b class="up">+5%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>어제 던진 세 개의 질문에 하루 만에 전부 답이 나왔음.</b> ① <b>'숫자냐 주가냐'</b> → <b>주가</b>. ② <b>'외국인 순매수가 하루짜리였나'</b> → <b>그렇다</b>. <b>+1조 4,463억(8/5) → -3조 3,285억(8/6)</b>으로 <b>하루 만에 두 배 넘게 되돌림</b>. ③ <b>'반도체가 흔들려도 지수가 버티는지'</b> → <b>못 버텼음</b>. 어제 기대했던 <b>업종 확산</b>은 대형주 급락 앞에서 지수를 지탱하지 못했음.</li>
+            <li><b>낙폭의 구조가 극단적으로 단순했음.</b> <b>삼성전자 -6.30%(235,000원) · SK하이닉스 -10.37%(1,495,000원)</b> 두 종목이 <b>코스피 시가총액의 약 44%</b>. 어제 외국인이 순매수의 <b>86%</b>를 이 두 종목에 집중했던 것이 <b>정확히 역방향으로 재현</b>된 셈. <b>SK스퀘어는 -13.32%</b>로 더 크게 밀렸음. 사실상 <b>지수가 아니라 두 종목이 빠진 하루</b>.</li>
+            <li><b>매도 사이드카는 오전 10시 18분에 발동.</b> <b>코스피200 선물이 전일 종가 대비 5.04% 하락</b>한 상태가 1분간 지속되면서 <b>프로그램 매도호가 효력이 5분간 정지</b>됐음. 최근 사이드카가 <b>코스닥 '매수' 사이드카(3일 연속)</b>였던 것과 달리 이번엔 <b>코스피 '매도'</b>라는 점에서, 시장의 방향성이 얼마나 빠르게 뒤집혔는지를 보여주는 기록.</li>
+            <li><b>개인이 3조 3,412억을 받아냈다는 사실은 따로 기록해 둘 만함.</b> 외국인 순매도 <b>-3조 3,285억</b>과 개인 순매수 <b>+3조 3,412억</b>이 <b>거의 1:1로 대칭</b>. 개인은 <b>8/5에 -1조 1,832억 차익 실현</b> 후 <b>하루 만에 3.3조 순매수로 전환</b>했음. <b>급락마다 개인이 받아내는 구조</b>가 반복되고 있고, 이 물량은 <b>반등 국면에서 매물 벽</b>으로 되돌아올 수 있다는 점이 부담 요인.</li>
+            <li><b>코스닥의 디커플링이 이날의 진짜 뉴스일 수 있음.</b> 코스피가 <b>-4.58%</b> 빠지는 동안 코스닥은 <b>801.67(+2.08p, +0.26%)</b>로 <b>15거래일 만에 800선을 회복</b>. 장중 낙폭을 만회한 것이며, 수급도 <b>기관 +1,614억 · 개인 +858억</b>으로 <b>외국인(-2,480억)만 이탈</b>. 최근 <b>코스닥 5거래일 연속 상승</b>이라는 흐름이 <b>코스피 급락에도 끊기지 않았다</b>는 점이 확인됐음.</li>
+            <li><b>코스닥을 끌어올린 건 개별 재료였음.</b> 시총 1위 <b>알테오젠이 글로벌 제약사와 5,200억원 규모 기술이전 계약</b>을 체결하며 <b>+5%</b>. <b>반도체 밖에 실적·계약 기반 재료가 있는 종목</b>으로 자금이 이동했다는 해석이 가능하고, 이는 <b>지수 하락 = 전면 위험 회피</b>가 아니었음을 뜻함.</li>
+            <li><b>환율이 거의 움직이지 않았다는 점이 의외의 대목.</b> 외국인이 <b>3.3조를 순매도</b>했는데도 원/달러는 <b>1,423.8원(-0.7원)</b>으로 <b>오히려 소폭 하락</b>. 통상 대규모 외국인 매도는 <b>달러 매수 → 환율 상승</b>으로 이어지는데 그렇지 않았음. <b>매도 대금이 아직 역송금되지 않았거나</b>, <b>간밤 달러 약세가 상쇄</b>했을 가능성. 어느 쪽이든 <b>환율이 주식 급락을 확증해주지 않았다</b>는 점은 기록해 둘 만함.</li>
+            <li><b>증권가 코멘트도 원인을 한 곳으로 지목했음.</b> 이경민 대신증권 연구원은 <b>"샌디스크의 부진한 가이던스가 메모리 업종 전반의 투자심리를 위축시켰으며, 반도체 급락으로 매도 사이드카가 발동"</b>이라고 진단. 즉 <b>국내 요인이 아니라 대외 요인</b>이라는 구도는 최근 며칠과 동일하게 유지되고 있음.</li>
+            <li><b>변동성의 크기를 다시 확인시켜준 하루였음.</b> 최근 7거래일이 <b>+17.91%(사상 최대) → -5.12% → +1.62% → +3.76% → -4.58%</b>. <b>이틀 연속 같은 방향으로 간 적이 사실상 없는</b> 국면이며, <b>일간 4~5% 진폭이 예외가 아니라 기본값</b>이 된 상태.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>🔎 오늘의 관전 포인트 <span class="k">8/7(금)</span></h3>
+          <ul class="notes">
+            <li><b>오늘 밤 미국 7월 고용보고서가 이번 주의 마지막이자 최대 관문.</b> 시장 예상은 <b>비농업 고용 +8만 5,000명</b>(6월 <b>+5만 7,000명</b>), <b>실업률 4.2%</b>(전월과 동일). <b>8월엔 FOMC가 없어</b> 지표 하나에 금리 기대가 크게 흔들리는 구간이고, 간밤 <b>10년물이 4.67%까지 올라선</b> 상태에서 맞는 지표라 <b>강한 고용 → 금리 추가 상승 → 기술주 부담</b>이라는 경로가 특히 경계됨. 반대로 <b>부진하면 금리 인하 기대</b>가 살아나는 양방향 재료.</li>
+            <li><b>다만 이번 고용지표는 해석이 까다로울 수 있음.</b> 블룸버그 이코노믹스는 <b>월드컵 관련 일시적 고용의 되돌림</b>과 <b>지방정부 예산 악화에 따른 고용 둔화</b> 가능성을 지적했음. <b>표면 숫자와 실제 노동시장 온도가 어긋날 수 있다</b>는 뜻이므로, 헤드라인 수치 하나로 방향을 단정하기보다 <b>세부 항목</b>까지 확인할 필요가 있는 지표.</li>
+            <li><b>어제 3.3조를 판 외국인이 오늘도 파는지가 지수의 1순위 변수.</b> 최근 흐름은 <b>+7.6조(7/31) → -2.8조(8/3) → -0.65조(8/4) → +1.45조(8/5) → -3.33조(8/6)</b>. <b>수렴은커녕 진폭이 다시 벌어졌음</b>. 어제 매수 전환을 '추세 전환'으로 읽었다면 하루 만에 부정된 것이므로, <b>이번엔 이틀 연속 같은 방향</b>이 나오는지를 확인하기 전까지 어느 쪽으로도 결론을 내리기 어려운 구간.</li>
+            <li><b>개인의 3.3조 순매수가 어떻게 소화되는지가 두 번째 체크포인트.</b> 8/5에 <b>1.2조를 팔았던</b> 개인이 8/6에 <b>3.3조를 샀음</b>. 반등이 나오면 <b>이 물량이 다시 매물로 나올 가능성</b>이 있고, 추가 하락이 나오면 <b>개인의 손실 부담</b>이 커지는 구조. <b>상단에서의 매물 벽</b>과 <b>하단에서의 심리</b>를 동시에 좌우하는 변수.</li>
+            <li><b>6,300선 회복 여부가 오늘의 기술적 기준선.</b> 어제 <b>6,296.38</b>로 <b>6,300을 살짝 내준</b> 채 마감했음. 이틀 전엔 <b>6,600을 못 지켰고</b> 어제는 <b>6,300을 못 지켰음</b> — <b>지지선이 계단식으로 내려오는</b> 흐름인지, 아니면 <b>급락 후 되돌림</b>이 나오는지가 오늘 판가름 날 대목.</li>
+            <li><b>유가·금리가 다시 역풍으로 돌아섰다는 점을 전제로 깔아야 함.</b> <b>WTI $77.29(+2.75%) · 브렌트 $82.49(+3.83%) · 미 10년물 4.67%</b>. 어제까지 <b>'사흘째 우호적'</b>이라 적었던 조건이 <b>하루 만에 반대로</b> 뒤집혔음. <b>이란 의회의 호르무즈 통항 제한 법안</b>이 실제 입법 단계로 가면 유가 상단이 더 열릴 수 있고, 이 경우 <b>정유·조선·에너지</b>에 순풍, <b>항공·운송·화학</b>에 역풍이라는 구도는 <b>이틀 전과 정반대</b>로 작동함.</li>
+            <li><b>코스닥의 디커플링이 이어지는지가 가장 흥미로운 관찰 포인트.</b> 어제 코스피 <b>-4.58%</b> 속에서도 코스닥은 <b>+0.26%로 800선을 회복</b>했고 <b>5거래일 연속 상승</b>을 지켰음. 이것이 <b>반도체 회피 자금의 일시적 피난처</b>였는지, 아니면 <b>제약·바이오 중심의 독립적 흐름</b>이 자리 잡은 것인지는 <b>오늘 코스피가 반등할 때 코스닥이 어떻게 반응하는가</b>를 봐야 판단할 수 있음. <b>같이 오르면 순환매, 코스피만 오르면 피난처였던 것</b>.</li>
+            <li><b>메모리 업황과 주가의 괴리를 어떻게 정리할지가 남은 숙제.</b> 사흘간 <b>AMD → 샌디스크 → 웨스턴디지털</b>이 모두 <b>실적은 좋고 주가는 급락</b>했음. 공통 원인은 <b>실적이 아니라 가이던스가 극단적 눈높이에 미달</b>한 것. <b>NAND 가격 상승이 성장의 3분의 2</b>라는 샌디스크의 설명은 국내 투톱에 여전히 우호적인 데이터지만, 시장이 <b>업황보다 눈높이를 기준으로 가격을 매기고 있다</b>는 점은 당분간 유지될 전제로 보는 편이 안전함.</li>
+            <li><b>금요일이라는 점도 변수.</b> <b>고용보고서가 한국 시간 오늘 밤</b>에 나오므로 국내 투자자는 <b>결과를 확인하지 못한 채 주말을 넘겨야 함</b>. 어제 같은 <b>일간 4~5% 진폭</b>이 상시화된 국면에서 <b>주말 갭 리스크</b>를 안고 포지션을 키우기는 어려운 환경이며, <b>장 후반 관망세</b>가 나타날 가능성이 있음.</li>
+            <li><b>결론적으로 오늘은 방향보다 진폭을 전제로 봐야 하는 날.</b> 최근 7거래일 <b>+17.91% → -5.12% → +1.62% → +3.76% → -4.58%</b>가 보여주듯 <b>이틀 연속 같은 방향이 나오지 않는 장</b>이 이어지고 있음. <b>반등이 나와도 추세로, 추가 하락이 나와도 붕괴로 단정하기 어려운</b> 구간이므로 변동성 자체를 리스크로 계산하는 편이 합리적. <b>본 일지는 투자 참고용이며 특정 종목의 매수·매도 권유가 아님.</b></li>
+          </ul>
+        </section>
+
+      </div>
+    </details>
+
+    <details class="day" id="d-2026-08-06">
+      <summary>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        <span class="date-badge"><span class="d">8/6</span><span class="w">목요일</span></span>
+        <span class="headline">외국인 1.4조 순매수 복귀로 반도체가 되돌아왔다 — 코스피 +3.76% 6,598·SK하이닉스 +5.77%, 코스닥 4일 연속 상승 · 간밤 뉴욕은 다우만 3일째 사상 최고(+0.49%) 나스닥 -0.83% 차별화 · 샌디스크 매출 +372% 서프라이즈에도 시간외 -7%</span>
+        <span class="sum-chips">
+          <span class="mini up"><span class="lab">코스피</span><span class="v">+3.76%</span></span>
+          <span class="mini up"><span class="lab">코스닥</span><span class="v">+2.42%</span></span>
+        </span>
+      </summary>
+      <div class="body">
+
+        <section class="block">
+          <h3>🌙 간밤 미국 증시 <span class="k">8/5(수) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx up"><div class="idx-top"><span class="nm">다우존스</span><span class="arw">▲</span></div><div class="val tnum">54,349.12</div><div class="chg-row"><span class="chg-pt tnum">+263.24</span><span class="chg-pct tnum">+0.49%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">S&amp;P 500</span><span class="arw">▼</span></div><div class="val tnum">7,723.55</div><div class="chg-row"><span class="chg-pt tnum">-12.97</span><span class="chg-pct tnum">-0.17%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">나스닥</span><span class="arw">▼</span></div><div class="val tnum">26,363.44</div><div class="chg-row"><span class="chg-pt tnum">-221.55</span><span class="chg-pct tnum">-0.83%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">WTI 유가</span><span class="arw">▼</span></div><div class="val tnum">$75.22</div><div class="chg-row"><span class="chg-pt tnum">-0.53</span><span class="chg-pct tnum">-0.70%</span></div></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">AMD <b class="down">-6.9%</b></span>
+            <span class="stk">샌디스크 <b class="down">시간외 -7.29%</b></span>
+            <span class="stk">금 선물 <b class="up">+3.7%</b></span>
+            <span class="stk">미 10년물 <b class="down">4.62%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>지수가 처음으로 갈라졌음.</b> 다우 <b>54,349.12(+263.24p, +0.49%)</b>로 <b>3거래일 연속 사상 최고 종가 · 5거래일 연속 상승</b>(5월 말 이후 최장)인 반면, S&amp;P 500은 <b>7,723.55(-0.17%)</b>, 나스닥은 <b>26,363.44(-221.55p, -0.83%)</b>로 <b>4거래일 연속 상승이 끊겼음</b>. 이틀간 세 지수가 나란히 급등하던 구도가 <b>기술주 → 대형 가치·경기민감주 로테이션</b>으로 바뀐 것이 핵심 변화.</li>
+            <li><b>나스닥을 끌어내린 건 예고된 재료였음 — AMD.</b> 어제 카드에서 <b>'시간외 -8%'</b>로 적었던 반응이 정규장에서 <b>-6.9%</b>로 확정. 실적 자체는 <b>매출 $115.4억 · EPS $1.66</b>으로 컨센을 넘겼지만, 시장은 <b>'가이던스가 극단적 기대치에 못 미쳤다'</b>는 이유로 매도. 여기에 <b>스페이스X가 자사 컴퓨팅 인프라를 엔비디아 칩으로만 구축하겠다고 밝힌 점</b>이 AMD 낙폭을 키웠음.</li>
+            <li><b>장 마감 후 샌디스크가 오늘의 진짜 재료를 던졌음.</b> 회계 4분기 매출 <b>$89.65억(전년 대비 +372%)</b>으로 가이던스 상단 <b>$82.5억</b>과 컨센 <b>$84.8억</b>을 모두 크게 상회, 비GAAP EPS <b>$39.25</b>(가이던스 $30~33), <b>총마진 84.6%</b>, 조정 FCF <b>$50.4억(전분기 대비 +108%)</b>, <b>140억 달러 자사주 매입</b>까지 발표. <b>NAND 공급 부족과 가격 인상</b>이 순차 매출 증가분의 약 <b>3분의 2</b>를 설명한다고 밝힘.</li>
+            <li><b>그런데 주가는 또 빠졌음 — 정규장 -5.4%, 시간외 추가 -7.29%.</b> 이유는 단 하나, <b>다음 분기 가이던스 $103~108억이 컨센 $108.2억에 약 2.5% 못 미쳤다는 것</b>. 즉 <b>이틀 연속(AMD → 샌디스크) '역대급 실적 + 주가 급락'</b>이 반복됐고, 두 번 모두 원인이 <b>실적이 아니라 기대치</b>였다는 점이 동일함.</li>
+            <li><b>유가는 사흘째 안정 — WTI 9월물 $75.22(-0.70%)</b>. <b>미국·이란·오만이 호르무즈 해협 선박 통항을 관리하는 잠정 합의</b>를 협의 중이라는 보도가 이어졌고, 구조는 <b>입항 선박은 이란 영해, 출항 선박은 오만 해역 통과</b>. 브렌트는 <b>$79.43</b> 부근에서 보합. 7월의 지정학 프리미엄이 사실상 해소된 상태.</li>
+            <li><b>다만 금이 튀었다는 점은 눈여겨볼 대목.</b> 금 선물이 <b>+3.7%, 온스당 $4,305.20</b>으로 급등했는데 배경은 <b>달러 약세</b>. <b>위험자산(다우 최고치)과 안전자산(금)이 동시에 오르는</b> 구도는 시장이 방향을 완전히 확신하지 못하고 있다는 신호로도 읽힘.</li>
+            <li><b>금리는 4.6%대에서 계속 잠잠함.</b> 미 10년물이 <b>4.62~4.64%</b> 범위에 머물며 3거래일째 <b>4.7% 아래</b>를 유지. 유가·금리가 동시에 눌려 있는 국면이 이어지는 중.</li>
+            <li><b>그 외 개별 종목에서는 로테이션의 증거가 뚜렷.</b> <b>쇼피파이</b>가 2분기 호실적에 급등, <b>일라이릴리</b>가 GLP-1 수요를 앞세운 어닝 서프라이즈로 상승했고, <b>러셀 2000 소형주 지수는 장중 사상 최고</b>를 찍었음. <b>기술주에서 빠진 돈이 시장 밖으로 나간 게 아니라 다른 섹터로 옮겨간</b> 하루였다는 해석이 가능.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>📊 코스피 · 코스닥 <span class="k">8/5(수) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx up"><div class="idx-top"><span class="nm">코스피</span><span class="arw">▲</span></div><div class="val tnum">6,598.26</div><div class="chg-row"><span class="chg-pt tnum">+239.31</span><span class="chg-pct tnum">+3.76%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">코스닥</span><span class="arw">▲</span></div><div class="val tnum">799.59</div><div class="chg-row"><span class="chg-pt tnum">+18.87</span><span class="chg-pct tnum">+2.42%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">원/달러 환율</span><span class="arw">▼</span></div><div class="val tnum">1,424.5</div><div class="chg-row"><span class="chg-pt tnum">-8.0원</span><span class="chg-pct">외국인 매수에 원화 강세</span></div></div>
+          </div>
+          <div class="kv" style="margin:8px 0 12px">이틀 연속 상승하며 <b>6,598.26(+3.76%)</b> 마감. <b>장중 6,674.66</b>까지 올랐다가 <b>6,600선을 살짝 밑돌며</b> 마쳤음. 어제 카드의 관전 포인트였던 <b>'외국인이 순매수로 전환하는가'</b>가 <b>+1조 4,463억</b>으로 답이 나왔고, 그 돈이 정확히 <b>반도체 투톱</b>으로 들어갔다는 점이 핵심. 코스닥은 <b>799.59(+2.42%)</b>로 <b>4거래일 연속 상승</b>했지만 사이드카는 발동되지 않아 <b>과열이 한 단계 식은 모습</b>.</div>
+          <div class="flow">
+            <div class="f buy"><span class="lab">외국인 · 코스피</span><span class="amt tnum">+1조 4,463억</span><span class="note">3거래일 만에 순매수 전환</span></div>
+            <div class="f sell"><span class="lab">개인 · 코스피</span><span class="amt tnum">-1조 1,832억</span><span class="note">이틀 매수 후 차익 실현</span></div>
+            <div class="f sell"><span class="lab">기관 · 코스피</span><span class="amt tnum">-2,838억</span><span class="note">매도 강도 대폭 축소</span></div>
+            <div class="f buy"><span class="lab">개인 · 코스닥</span><span class="amt tnum">+3,950억</span><span class="note">외국인 -2,980억 / 기관 -1,108억</span></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">삼성전자 <b class="up">+2.50%</b></span>
+            <span class="stk">SK하이닉스 <b class="up">+5.77%</b></span>
+            <span class="stk">삼성전기 <b class="up">+14.43%</b></span>
+            <span class="stk">빛과전자 <b class="up">+29.89%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>수급 주체가 완전히 뒤집혔음.</b> 코스피에서 <b>외국인 +1조 4,463억</b> 순매수인 반면 <b>개인 -1조 1,832억 · 기관 -2,838억</b> 순매도. 직전 3거래일이 <b>'개인이 사고 외국인이 파는' 구조</b>였던 것과 정확히 반대. 외국인 순매도 강도는 <b>+7.6조(7/31) → -2.8조(8/3) → -6,464억(8/4) → +1.45조(8/5)</b>로, <b>수렴하다 전환</b>하는 전형적 경로를 밟았음.</li>
+            <li><b>외국인이 산 것은 사실상 반도체 두 종목이었음.</b> 순매수 1위 <b>SK하이닉스 6,595억</b>, 2위 <b>삼성전자 5,778억</b>으로 두 종목만 <b>1조 2,373억</b> — 전체 순매수의 <b>약 86%</b>. <b>삼성전자 246,000원(+2.50%)</b>, <b>SK하이닉스 1,668,000원(+5.77%)</b>. 반면 기관은 <b>삼성전자를 5,712억 순매도</b>해 정반대 포지션을 잡았다는 점도 기록해 둘 만함.</li>
+            <li><b>이틀 전 순환매와 성격이 또 달라졌음.</b> 8/4는 <b>대장주 제자리 + 나머지 확산형(+1.62%)</b>이었는데, 8/5는 <b>대장주가 앞장선 집중형(+3.76%)</b>. 다만 반도체 쏠림으로만 보기도 어려운 게 <b>삼성전기 +14.43%(130만원선 회복)</b>, <b>현대차 +3.06%</b>처럼 <b>업종 간 온기가 함께 확산</b>됐다는 점. 증권가에서도 <b>'쏠림 심화가 아니라 확산'</b>이라는 평가가 나왔음.</li>
+            <li><b>코스닥은 4거래일 연속 상승했지만 결이 바뀌었음.</b> <b>799.59(+18.87p, +2.42%)</b>로 <b>800선 턱밑</b>까지 왔으나, 3일 연속 이어지던 <b>매수 사이드카는 발동되지 않았음</b>. 상승률도 <b>+5.88% → +2.42%</b>로 절반 이하. 수급도 <b>기관 주도(+5,441억)에서 개인 주도(+3,950억)</b>로 바뀌고 <b>외국인 -2,980억 · 기관 -1,108억</b>이 이탈 — <b>자금이 코스닥에서 코스피 대형주로 이동</b>했다는 해석에 부합.</li>
+            <li><b>테마에서는 광통신주가 압도적이었음.</b> <b>빛과전자 +29.89% · 오이솔루션 +29.84%(상한가권)</b>, <b>대한광통신 +18.57%(12,070원)</b>, <b>RFHIC +7.28%</b>. AI 데이터센터 내부 연결 수요가 재부각된 흐름. 코스닥 시총 1위 <b>알테오젠은 +3.75%(277,000원)</b>로 상대적으로 차분했음.</li>
+            <li><b>환율이 지수 상승을 뒷받침했음.</b> 원/달러가 <b>1,424.5원(-8.0원)</b>으로 하락. 어제 <b>1,430원대</b>에서 내려온 것으로, <b>외국인의 1.4조 주식 순매수에 따른 달러 매도</b>가 직접적 요인. 간밤 <b>달러 약세(금 +3.7%의 배경)</b>도 같은 방향으로 작용했음.</li>
+            <li><b>상승 배경에 대한 시장 해석은 세 갈래로 정리됨.</b> ① <b>미·이란 갈등 완화 → 유가·금리 하락</b>으로 위험선호 회복, ② <b>팔란티어 매출 +93% 등 빅테크 실적 호조</b>로 AI 수요 불안 완화, ③ <b>간밤 미국 반도체주 강세</b>가 국내 투톱으로 직결. 즉 <b>국내 재료가 아니라 대외 재료가 만든 반등</b>이라는 점은 유지되고 있음.</li>
+            <li><b>다만 장중 고점 대비로는 힘이 빠진 마감이었음.</b> <b>6,674.66 → 6,598.26</b>으로 고점 대비 <b>약 76p(-1.1%)</b> 반납하며 <b>6,600선을 지키지 못했음</b>. 갭업 출발(<b>+3.85%, 6,603.48</b>) 이후 장중 더 오른 뒤 되밀린 패턴이므로, <b>상승 자체보다 마감 위치</b>가 오늘 시가를 가늠하는 데 더 중요한 정보.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>🔎 오늘의 관전 포인트 <span class="k">8/6(목)</span></h3>
+          <ul class="notes">
+            <li><b>오늘 최대 재료는 명백히 샌디스크.</b> <b>매출 +372% · 총마진 84.6% · NAND 가격 주도 성장</b>은 국내 메모리 업황에 대한 <b>가장 직접적인 확인 데이터</b>이고, 특히 <b>가격 인상이 성장의 3분의 2</b>라는 문장은 <b>삼성전자·SK하이닉스 실적 레버리지</b>와 그대로 연결됨. 문제는 <b>주가가 정규장 -5.4%, 시간외 -7.29%</b>였다는 것. <b>업황(강력) vs 주가(약세)</b>가 또 갈렸으므로, 국내 투톱이 <b>숫자를 볼지 주가를 볼지</b>가 오늘 지수 방향의 1순위 변수.</li>
+            <li><b>'좋은 실적, 나쁜 주가'가 이틀 연속이라는 패턴 자체가 경계 신호.</b> <b>AMD(8/4 발표 → 8/5 -6.9%)</b>에 이어 <b>샌디스크(8/5 발표 → 시간외 -7.29%)</b>. 두 번 모두 <b>실적이 아니라 가이던스가 극단적 눈높이에 미달</b>한 게 이유였음. 이는 <b>AI 반도체에 대한 시장 기대가 이미 실적 상단을 넘어서 있다</b>는 뜻이며, 어제 국내 투톱이 <b>+2.5%, +5.77%</b> 오른 상태에서 맞는 재료라는 점이 부담 요인.</li>
+            <li><b>외국인 순매수가 하루짜리였는지가 두 번째 관문.</b> 어제 <b>+1조 4,463억</b>은 3거래일 만의 전환이지만, 직전 5거래일 흐름이 <b>+7.6조 → -2.8조 → -0.65조 → +1.45조</b>로 여전히 진폭이 큼. <b>오늘도 순매수가 이어지면 추세 전환</b>으로 볼 근거가 생기지만, 하루 만에 되돌리면 <b>단기 저가 매수의 성격</b>이었다는 해석이 맞게 됨. 특히 외국인 매수가 <b>반도체 두 종목에 86% 집중</b>됐으므로 <b>샌디스크 반응과 사실상 한 몸</b>인 변수.</li>
+            <li><b>개인의 1.2조 순매도를 어떻게 읽을지도 관건.</b> 개인은 <b>8/3~8/4 이틀간 순매수</b> 후 <b>8/5에 -1조 1,832억</b>으로 돌아섰음. 급락 구간에서 산 물량을 <b>반등에 정리한 전형적 패턴</b>이므로, 이 물량이 <b>얼마나 더 남아 있는지</b>가 상단에서 매물 벽으로 작용할 수 있음.</li>
+            <li><b>6,600선 회복 여부가 오늘의 기술적 체크포인트.</b> 어제 <b>장중 6,674.66 → 종가 6,598.26</b>으로 6,600을 <b>지키지 못하고</b> 마감했음. 증권가는 8월 중 <b>7,000선 회복 가능성</b>을 열어두고 <b>상단 목표 7,800</b>까지 제시하고 있지만, 동시에 <b>'5~6월 같은 가파른 상승은 기대하기 어렵다'</b>는 속도조절론도 병존. 오늘은 목표치보다 <b>6,600 안착 여부</b>가 현실적인 관찰 대상.</li>
+            <li><b>간밤 미국의 로테이션이 국내에 어떻게 번역될지가 흥미로운 변수.</b> <b>다우 사상 최고(+0.49%) vs 나스닥 -0.83%</b>는 <b>기술주에서 가치·경기민감주로의 이동</b>이고, <b>러셀 2000 장중 사상 최고</b>가 이를 뒷받침. 국내에서도 어제 <b>삼성전기 +14.43% · 현대차 +3.06%</b>처럼 반도체 밖으로 온기가 번진 흔적이 있으므로, 오늘 반도체가 흔들려도 <b>지수가 버티는지</b>를 보면 확산의 실체를 판단할 수 있음.</li>
+            <li><b>환율 1,420원대 진입 여부.</b> <b>1,424.5원(-8.0원)</b>으로 내려왔고 간밤 <b>달러 약세</b>가 이어졌음. 외국인 순매수가 지속되면 <b>1,410원대</b>까지 열릴 수 있는데, 환율 하락은 <b>외국인 수급에 우호적</b>인 동시에 <b>수출주 채산성에는 부담</b>이라는 양면성이 있음. 어제처럼 <b>1,420원대에서 저가 결제 수요</b>가 나오는지도 확인 대상.</li>
+            <li><b>금 +3.7% 급등은 따로 기록해 둘 만한 엇박자.</b> 주식(다우 최고치)과 금이 <b>동시에</b> 오르는 국면은 <b>달러 약세</b>가 공통 배경일 때 나타나지만, <b>안전자산 수요가 살아 있다</b>는 신호이기도 함. 반등을 추세로 확신하기 전에 <b>한 번 더 확인이 필요한 근거</b>로 남겨두는 편이 합리적.</li>
+            <li><b>이번 주 최대 이벤트는 여전히 내일(7일) 미국 7월 고용보고서.</b> 시장 예상 <b>실업률 4.3%</b>(6월 4.2%). 오늘 밤에는 <b>주간 신규 실업수당청구</b>가 선행 지표로 나옴. <b>8월엔 FOMC가 없어</b> 지표 하나하나에 금리 기대가 민감하게 반응하는 구간이고, 이후 <b>12일 CPI · 26일 PCE</b>가 9월 FOMC를 향한 관문. 고용보고서 대기 심리 때문에 <b>오늘·내일은 포지션을 크게 늘리기 어려운 장</b>일 가능성.</li>
+            <li><b>유가·금리는 사흘째 우호적으로 고정.</b> <b>WTI $75.22 · 브렌트 $79.43 · 미 10년물 4.62%</b>. <b>미·이란·오만의 호르무즈 통항 잠정 합의</b>가 실제 체결되면 유가 하방 압력이 한 번 더 나올 수 있고, 이 경우 <b>항공·운송·화학</b>에 순풍, <b>정유·조선·에너지</b>에 역풍이라는 구도는 그대로 유지됨.</li>
+            <li><b>변동성 전제는 이번 주에도 유효.</b> 최근 6거래일이 <b>+17.91%(사상 최대) → -5.12% → +1.62% → +3.76%</b>. 방향이 잡힌 것처럼 보여도 <b>일간 진폭이 여전히 비정상적으로 큰 국면</b>이므로, 추세 확인 전까지는 변동성 자체를 리스크로 계산하는 편이 합리적. <b>본 일지는 투자 참고용이며 특정 종목의 매수·매도 권유가 아님.</b></li>
+          </ul>
+        </section>
+
+      </div>
+    </details>
+
+    <details class="day" id="d-2026-08-05">
+      <summary>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        <span class="date-badge"><span class="d">8/5</span><span class="w">수요일</span></span>
+        <span class="headline">비(非)반도체 순환매로 V자 반등 — 코스피 6,300 회복·코스닥 3일 연속 매수 사이드카 +5.88%, 7월 CPI 2.8%로 3개월 만에 2%대 · 간밤 뉴욕은 다우 5.4만·S&amp;P 사상 최고 · AMD 호실적에도 시간외 -8%</span>
+        <span class="sum-chips">
+          <span class="mini up"><span class="lab">코스피</span><span class="v">+1.62%</span></span>
+          <span class="mini up"><span class="lab">코스닥</span><span class="v">+5.88%</span></span>
+        </span>
+      </summary>
+      <div class="body">
+
+        <section class="block">
+          <h3>🌙 간밤 미국 증시 <span class="k">8/4(화) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx up"><div class="idx-top"><span class="nm">다우존스</span><span class="arw">▲</span></div><div class="val tnum">54,085.88</div><div class="chg-row"><span class="chg-pt tnum">+907.47</span><span class="chg-pct tnum">+1.71%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">S&amp;P 500</span><span class="arw">▲</span></div><div class="val tnum">7,736.52</div><div class="chg-row"><span class="chg-pt tnum">+136.02</span><span class="chg-pct tnum">+1.79%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">나스닥</span><span class="arw">▲</span></div><div class="val tnum">26,584.99</div><div class="chg-row"><span class="chg-pt tnum">+671.10</span><span class="chg-pct tnum">+2.59%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">WTI 유가</span><span class="arw">▼</span></div><div class="val tnum">$76.02</div><div class="chg-row"><span class="chg-pt tnum">-4.32</span><span class="chg-pct tnum">-5.38%</span></div></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">팔란티어 <b class="up">+29%</b></span>
+            <span class="stk">엔비디아 <b class="up">$211대</b></span>
+            <span class="stk">AMD <b class="down">시간외 -8%</b></span>
+            <span class="stk">미 10년물 <b class="down">4.69%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>이틀 연속 급등, 그것도 기록 경신으로.</b> 다우 <b>54,085.88(+907.47p, +1.71%)</b>로 <b>사상 처음 54,000선 돌파</b>, S&amp;P 500 <b>7,736.52(+136.02, +1.79%)</b>로 <b>약 두 달 만에 사상 최고 종가</b> 탈환, 나스닥 <b>26,584.99(+671.10, +2.59%)</b>. 어제 카드에서 <b>'S&amp;P가 최고치와 0.3% 차'</b>라고 적었던 간격을 하루 만에 메웠음.</li>
+            <li><b>동력은 이틀째 같은 두 가지 — 이란 협상과 실적.</b> <b>베선트 재무장관이 CNBC에서 "오늘이나 내일 호르무즈 해협 개방 합의가 가능하다"</b>고 언급했고 <b>카타르 외교부도 미·이란 중재가 진행 중</b>임을 확인. 이란은 직접 협상은 부인했으나 <b>오만을 통한 해협 통항 확대 논의는 진전</b> 중이라고 인정.</li>
+            <li><b>유가는 이틀 연속 급락해 3주 최저.</b> <b>WTI가 장중 $82.33까지 올랐다가 $76.02(-$4.32, -5.38%)</b>로 밀렸고 <b>브렌트와 함께 7월 13일 이후 최저</b>. 이틀간 <b>$85 → $76</b>으로 약 <b>11% 하락</b>하며 7월에 쌓인 지정학 프리미엄을 대부분 반납.</li>
+            <li><b>랠리의 주인공은 AI 소프트웨어였음</b> — <b>팔란티어(PLTR) +29%</b>로 <b>2024년 2월 이후 최대 상승</b>. AI 도구 수요로 매출이 급증했다는 실적이 방아쇠. <b>캐터필러 한 종목이 다우 상승분에 300p 이상 기여</b>했고, <b>엔비디아는 $211대로 $210선을 회복</b>.</li>
+            <li><b>다만 장 마감 후 분위기가 갈렸음 — AMD가 '더블 비트'에도 시간외 8% 급락.</b> 2분기 매출 <b>$115.4억(+50%, 컨센 $113.1억 상회)</b>, <b>데이터센터 매출 $67억(+107%)</b>으로 두 배 이상 급증, 조정 EPS <b>$1.66(컨센 $1.62)</b>, 3분기 가이던스도 <b>약 $130억 · 비GAAP 총마진 56%</b>로 눈높이를 넘겼음. 그럼에도 주가가 빠진 이유는 <b>실적이 아니라 기대치</b> — <b>올해 들어 이미 +140% 오른 상태</b>여서 '좋은 실적'만으로는 부족했다는 해석.</li>
+            <li><b>금리는 4.69%로 안정 국면 유지.</b> 미 10년물이 <b>4.7% 아래</b>에 머물며, 7월 내내 <b>30년물 5.2%대</b>가 고밸류 성장주를 눌렀던 구도가 이틀째 완화된 상태. <b>유가 급락 → 인플레 기대 하향 → 금리 안정</b>의 연쇄가 계속 작동 중.</li>
+            <li><b>한국 장에 넘어오는 신호는 명확히 두 갈래.</b> 지수·금리·유가는 모두 <b>우호적</b>이지만, <b>AI 반도체 대장주에 대한 눈높이가 이미 매우 높다</b>는 사실이 AMD 시간외 반응으로 드러남. <b>어제 국내 반도체가 강보합에 그친 이유(AMD 실적 대기)</b>가 오늘은 <b>실제 숫자와 시간외 반응</b>으로 바뀌어 반영된다는 점이 핵심.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>📊 코스피 · 코스닥 <span class="k">8/4(화) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx up"><div class="idx-top"><span class="nm">코스피</span><span class="arw">▲</span></div><div class="val tnum">6,358.95</div><div class="chg-row"><span class="chg-pt tnum">+101.50</span><span class="chg-pct tnum">+1.62%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">코스닥</span><span class="arw">▲</span></div><div class="val tnum">780.72</div><div class="chg-row"><span class="chg-pt tnum">+43.37</span><span class="chg-pct tnum">+5.88%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">원/달러 환율</span><span class="arw">▲</span></div><div class="val tnum">1,432.5</div><div class="chg-row"><span class="chg-pt tnum">+2.7원</span><span class="chg-pct">장중 1,421원까지 급락</span></div></div>
+          </div>
+          <div class="kv" style="margin:8px 0 12px">전일 <b>-5.12%</b> 급락을 하루 만에 되돌리며 <b>6,358.95(+1.62%)</b>로 <b>6,300선을 회복</b>. 다만 지수를 끌어올린 건 반도체가 아니라 <b>방산·원전·화장품·바이오로 번진 비(非)반도체 순환매</b>였고, <b>상승종목 비율이 83%대</b>에 달한 <b>폭이 넓은 반등</b>. 코스닥은 <b>780.72(+5.88%)</b>로 뛰며 <b>올해 17번째, 3거래일 연속 매수 사이드카</b>가 발동.</div>
+          <div class="flow">
+            <div class="f buy"><span class="lab">개인 · 코스피</span><span class="amt tnum">+1조 2,124억</span><span class="note">이틀 연속 순매수</span></div>
+            <div class="f sell"><span class="lab">기관 · 코스피</span><span class="amt tnum">-7,017억</span><span class="note">전일 대비 매도 강도 축소</span></div>
+            <div class="f sell"><span class="lab">외국인 · 코스피</span><span class="amt tnum">-6,464억</span><span class="note">이틀 연속 순매도(강도 1/4로)</span></div>
+            <div class="f buy"><span class="lab">기관 · 코스닥</span><span class="amt tnum">+5,441억</span><span class="note">개인 +2,764억 / 외국인 -2,552억</span></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">삼성전자 <b class="up">+0.21%</b></span>
+            <span class="stk">SK하이닉스 <b class="up">+0.64%</b></span>
+            <span class="stk">리가켐바이오 <b class="up">+15%</b></span>
+            <span class="stk">HLB <b class="up">+11%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>반등의 성격이 어제와 완전히 달랐다는 점이 가장 중요.</b> 7월 31일 폭등은 <b>외국인이 반도체 두 종목을 쓸어담은 집중형</b>이었지만, 어제는 <b>대장주가 제자리인 채 나머지가 전부 오른 확산형</b>. <b>삼성전자 240,000원(+500원, +0.21%)</b>, <b>SK하이닉스 1,577,000원(+10,000원, +0.64%)</b>로 <b>강보합에 그쳤음에도 지수가 1.6% 올랐다</b>는 사실이 순환매의 폭을 보여줌.</li>
+            <li><b>코스닥이 진짜 주인공</b> — <b>780.72(+43.37p, +5.88%)</b>로 <b>3거래일 연속 매수 사이드카</b>. 오전 10시 47분경 <b>코스닥150 선물 +6.09% · 코스닥150 지수 +6.5%</b>로 발동 요건을 채웠음. 바이오·로봇이 상승을 주도해 <b>리가켐바이오 +15%, 에이비엘바이오 +13%, HLB +11%, 알테오젠 +9%</b> 등 시총 상위 전반이 강세.</li>
+            <li><b>수급은 여전히 '외국인 없는 반등'</b> — 한국거래소·넥스트레이드 합산 기준 코스피에서 <b>개인 +1조 2,124억</b> 대 <b>기관 -7,017억 · 외국인 -6,464억</b>. 외국인은 이틀 연속 순매도지만 <b>전일 -2조 8,264억에서 -6,464억으로 강도가 1/4 수준으로 줄었다</b>는 점은 개선. 코스닥에서는 반대로 <b>기관 +5,441억 · 개인 +2,764억 · 외국인 -2,552억</b>으로 국내 기관이 지수를 밀어올림.</li>
+            <li><b>7월 소비자물가가 +2.8%로 석 달 만에 2%대에 복귀.</b> 지수는 <b>119.77(2020=100)</b>이며 6월 <b>+3.2%</b>에서 큰 폭으로 둔화. 품목별로 <b>농축수산물 +0.9% · 공업제품 +3.7% · 전기·가스·수도 +0.4%</b>로, <b>석유류 상승세 둔화와 농축수산물 안정</b>이 전체 물가를 끌어내렸음. 어제 지수 반등의 국내 재료 역할을 한 지표.</li>
+            <li>원/달러는 <b>1,432.5원(+2.7원)</b>으로 상승 마감. 다만 경로가 특이했는데, <b>1,431.8원 개장 → 오전 1,433.6원 → 오전 11시경 1,421.0원까지 급락 → 1,430원대 복귀</b>. <b>수출업체 네고 물량과 외국인 주식 매수분의 커스터디 달러 매도</b>가 낮 시간대 환율을 눌렀지만, <b>1,420원대에서 저가 결제 수요</b>가 유입되며 낙폭을 되돌림.</li>
+            <li><b>남아 있는 불안 요인은 중국.</b> 반등에도 불구하고 <b>중국발 메모리 공급 과잉 우려</b>가 잔존한다는 지적이 이어졌고, 현대차증권은 최근 반도체 급락의 배경으로 <b>AI 수익화 우려와 중국 반도체 굴기</b>를 동시에 지목. 특히 <b>창신메모리(CXMT) 등 중국 메모리 업체의 부상과 저비용 AI 모델 확산</b>이 국내 반도체 투자심리를 흔든 요인으로 꼽힘.</li>
+            <li><b>2분기 실적 자체는 나쁘지 않았다는 점도 기록해 둘 만함.</b> 올 2분기 <b>순이익이 시장 예상치를 웃돈 기업 비율이 47.5%</b>로 전년 동기 <b>32.9%</b> 대비 <b>14.6%p 상승</b>. 업종별 서프라이즈 비율은 <b>소재 70% · IT 55% · 경기소비재 55%</b>. 최근 급락이 <b>실적 악화가 아니라 AI 투자 지속성에 대한 의구심과 레버리지 청산</b>이었다는 해석을 뒷받침.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>🔎 오늘의 관전 포인트 <span class="k">8/5(수)</span></h3>
+          <ul class="notes">
+            <li><b>오늘 최대 변수는 AMD 실적에 대한 국내 반도체의 해석.</b> 숫자는 <b>매출 +50% · 데이터센터 +107% · 가이던스 상향</b>으로 <b>AI 인프라 사이클이 꺾이지 않았다</b>는 직접 증거였지만, 주가는 <b>시간외 -8%</b>. <b>펀더멘털(우호적)과 주가 반응(부정적)이 정반대로 갈린 재료</b>이므로, 오늘 삼성전자·SK하이닉스가 <b>어느 쪽을 따라가는지</b>가 지수 방향의 핵심. 어제 두 종목이 <b>AMD 대기 모드로 강보합</b>에 머물렀던 만큼 반응이 오늘로 미뤄진 상태.</li>
+            <li><b>순환매가 하루짜리였는지 확인하는 날.</b> 어제 상승은 <b>대장주 제자리 + 나머지 전부 상승(상승종목 83%)</b>이라는 이례적 구조였음. 이런 확산형 반등은 <b>지수 체력이 회복됐다는 신호</b>일 수도, <b>주도주 부재의 순환매</b>일 수도 있음. <b>오늘 반도체가 방향을 잡아주면 전자, 다시 다른 업종으로 자금이 옮겨가면 후자</b>로 해석하는 편이 합리적.</li>
+            <li><b>코스닥의 연속 사이드카가 어디까지 가는지도 관전 대상.</b> <b>3거래일 연속 매수 사이드카 · 어제만 +5.88%</b>는 강세이지만 동시에 <b>과열 신호</b>이기도 함. 이틀 만에 <b>719 → 780</b>으로 8% 넘게 오른 만큼, <b>바이오·로봇 주도 상승의 차익 실현 압력</b>이 언제 나오는지 확인이 필요. 코스닥 수급이 <b>기관 주도</b>라는 점은 개인 주도보다는 안정적인 대목.</li>
+            <li><b>외국인 순매도 강도가 계속 줄어드는지가 추세 판단의 척도.</b> <b>+7.6조(7/31) → -2.8조(8/3) → -6,464억(8/4)</b>으로 극단에서 점차 수렴하는 중. <b>오늘 외국인이 순매수로 전환</b>하면 어제 반등이 추세로 이어질 근거가 되지만, 매도가 유지되면 <b>개인 매수에 의존하는 구조</b>가 3거래일째 이어지는 셈.</li>
+            <li><b>대외 여건은 이틀째 우호적으로 넘어옴.</b> <b>다우 사상 최고(54,085.88) · S&amp;P 사상 최고 · 나스닥 +2.59% · 10년물 4.69% · WTI $76(3주 최저)</b>는 모두 오늘 갭업 요인. 다만 어제 국내 지수가 이미 <b>미국 강세를 선반영해 +1.62%</b> 올랐기 때문에, <b>추가 갭업 여력이 얼마나 남아 있는지</b>는 별개 문제.</li>
+            <li><b>유가 이틀 연속 급락의 업종별 파급이 오늘 더 뚜렷해질 수 있음.</b> <b>$85 → $76(약 -11%)</b>는 단발성이 아닌 방향 전환에 가까움. <b>항공·운송·화학·전력</b>에는 원가 순풍, <b>정유·조선·에너지</b>에는 역풍. 어제 순환매가 <b>방산·원전·화장품</b>으로 흘렀던 만큼, 오늘은 <b>유가 수혜 업종으로 자금이 넘어가는지</b>를 함께 볼 필요.</li>
+            <li><b>물가 부담이 낮아진 것은 국내 정책 여건에 우호적.</b> <b>7월 CPI +2.8%</b>로 2%대에 복귀한 데다 <b>간밤 WTI가 추가로 -5.38%</b> 하락했으므로, <b>8월 이후 물가 경로 기대는 더 낮아지는 방향</b>. 다만 원/달러가 <b>1,430원대</b>에 머물러 수입 물가 경로는 여전히 부담 요인으로 남아 있음.</li>
+            <li><b>미국 쪽 남은 일정은 샌디스크 실적과 7일 고용보고서.</b> 오늘(현지 5일) <b>샌디스크</b> 실적이 <b>메모리 업황</b>을 직접 겨냥한 데이터로 예정돼 있고, <b>7일 미국 7월 고용보고서</b>가 주간 최대 이벤트(시장 예상 <b>실업률 4.3%</b>, 6월 4.2%). 이후 <b>12일 CPI · 26일 PCE</b>가 9월 FOMC를 앞둔 관문. 8월엔 <b>FOMC가 없어</b> 지표 하나하나에 금리 기대가 민감하게 반응할 구간.</li>
+            <li><b>증권가 시각은 '패닉셀은 끝났지만 직선 반등은 아니다'로 수렴.</b> 한국투자증권은 8월 코스피 밴드를 <b>5,500~7,500</b>으로 제시하며 <b>실적·퀄리티주 중심의 고금리 방어</b>를 권고했고, 시장 전반은 <b>저점을 확인하며 점진적으로 회복</b>하는 경로에 무게를 두는 중. 향후 방향을 가를 변수로는 <b>하이퍼스케일러 AI 투자의 실제 수익 기반 지속 여부 · 미국 빅테크의 중국산 메모리 채택 여부 · 미 장기금리 안정</b>이 꼽힘.</li>
+            <li><b>변동성 전제는 여전히 유효.</b> 최근 5거래일에 <b>사상 최대 폭등(+17.91%) → 5%대 급락 → 1.6% 반등</b>, 코스닥은 <b>3일 연속 매수 사이드카</b>. 방향성보다 <b>포지션 재구축이 지배하는 장세</b>가 이어지고 있으므로, 추세 확인 전까지는 변동성 자체를 리스크로 계산하는 편이 합리적.</li>
+          </ul>
+        </section>
+
+      </div>
+    </details>
+
+    <details class="day" id="d-2026-08-04">
+      <summary>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        <span class="date-badge"><span class="d">8/4</span><span class="w">화요일</span></span>
+        <span class="headline">폭등 하루 만에 -5.12% 반납 — 외국인·기관 4.8조 동반 매도에 삼전·닉스 8%대 급락, 코스닥만 매수 사이드카 +2.44% · 간밤 뉴욕은 이란 협상·유가 폭락에 다우 사상 최고 · 오늘 한국 7월 CPI</span>
+        <span class="sum-chips">
+          <span class="mini down"><span class="lab">코스피</span><span class="v">-5.12%</span></span>
+          <span class="mini up"><span class="lab">코스닥</span><span class="v">+2.44%</span></span>
+        </span>
+      </summary>
+      <div class="body">
+
+        <section class="block">
+          <h3>🌙 간밤 미국 증시 <span class="k">8/3(월) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx up"><div class="idx-top"><span class="nm">다우존스</span><span class="arw">▲</span></div><div class="val tnum">53,178.41</div><div class="chg-row"><span class="chg-pt tnum">+693.38</span><span class="chg-pct tnum">+1.32%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">S&amp;P 500</span><span class="arw">▲</span></div><div class="val tnum">7,600.50</div><div class="chg-row"><span class="chg-pt tnum">+110.78</span><span class="chg-pct tnum">+1.48%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">나스닥</span><span class="arw">▲</span></div><div class="val tnum">25,913.90</div><div class="chg-row"><span class="chg-pt tnum">+540.04</span><span class="chg-pct tnum">+2.13%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">WTI 유가</span><span class="arw">▼</span></div><div class="val tnum">$79.62</div><div class="chg-row"><span class="chg-pt tnum">-5.05</span><span class="chg-pct tnum">-5.97%</span></div></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">아마존 <b class="up">+4.58%</b></span>
+            <span class="stk">엔비디아 <b class="up">+2.93%</b></span>
+            <span class="stk">인텔 <b class="up">+0.89%</b></span>
+            <span class="stk">미 10년물 <b class="down">4.70%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>8월 첫 거래일부터 3대 지수 동반 급등</b> — 나스닥 <b>+2.13%(25,913.90)</b>, S&amp;P 500 <b>+1.48%(7,600.50)</b>, 다우 <b>+693.38p(+1.32%, 53,178.41)</b>. <b>다우는 사상 최고 종가</b>를 새로 썼고, S&amp;P 500도 <b>6월 초 기록한 사상 최고치와 약 0.3% 차이</b>까지 근접.</li>
+            <li><b>랠리의 방아쇠는 유가 폭락이었음</b> — <b>WTI가 5.97% 급락해 $80을 하회($79.62)</b>. <b>트럼프 대통령이 이란에 대한 군사 공격을 취소하고 호르무즈 해협 개방을 위한 협상 재개를 선언</b>한 것이 직접적 계기. <b>7월 한 달간 20% 넘게 뛰었던 유가</b>가 하루 만에 지정학 프리미엄을 대거 반납.</li>
+            <li><b>'유가 급락 → 인플레 압력 완화 → 금리 하락'의 교과서적 연쇄.</b> <b>미 10년물이 4.70%(-5bp)</b>로 되밀리며 최근 몇 주간 증시를 짓눌러온 <b>장기금리 압박이 처음으로 방향을 틀었음</b>. 7월 내내 <b>30년물 5.2%대(2007년 이후 최고)</b>가 고밸류 성장주를 할인해온 구도에 균열이 생긴 셈.</li>
+            <li><b>빅테크가 지수를 끌었음</b> — <b>아마존 +4.58%</b>가 AWS 서사를 이어가며 재차 강세, <b>엔비디아 +2.93%</b>, 인텔 +0.89%. 다만 <b>장 초반에는 소프트웨어·소비재가 주도하고 반도체는 뒤처졌던</b> 흐름으로, 7월 <b>필라델피아 반도체지수(SOX)가 -20% 이상 급락</b>한 뒤의 회복이 아직 고르지 않다는 점은 유의.</li>
+            <li><b>7월 ISM 제조업 PMI는 55.6%</b>로 확장 국면을 유지. 물가 지표가 아닌 만큼 이날 시장은 지표보다 <b>지정학 리스크 완화</b> 재료에 훨씬 크게 반응.</li>
+            <li><b>한국 장에 대한 함의는 이중적.</b> 지수·금리 측면은 명백히 우호적이지만, 유가 급락은 <b>정유·조선·에너지에는 역풍</b>, <b>항공·운송·화학 원가에는 순풍</b>으로 업종별 방향이 정반대. 어제 국내 증시가 미국장 개장 전에 급락 마감했기 때문에, <b>간밤 뉴욕 강세는 아직 국내에 반영되지 않은 상태</b>로 넘어옴.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>📊 코스피 · 코스닥 <span class="k">8/3(월) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx down"><div class="idx-top"><span class="nm">코스피</span><span class="arw">▼</span></div><div class="val tnum">6,257.45</div><div class="chg-row"><span class="chg-pt tnum">-338.00</span><span class="chg-pct tnum">-5.12%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">코스닥</span><span class="arw">▲</span></div><div class="val tnum">737.35</div><div class="chg-row"><span class="chg-pt tnum">+17.59</span><span class="chg-pct tnum">+2.44%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">원/달러 환율</span><span class="arw">▲</span></div><div class="val tnum">1,429.8</div><div class="chg-row"><span class="chg-pt tnum">+5.8원</span><span class="chg-pct">닷새 만에 원화 약세</span></div></div>
+          </div>
+          <div class="kv" style="margin:8px 0 12px">직전 거래일 <b>사상 최대 +17.91% 폭등</b> 이후 하루 만에 <b>-5.12%</b>로 되돌림. 장중 <b>6,393.00</b>까지 올랐다가 <b>6,223.29</b>까지 밀리는 <b>약 170p 진폭</b>을 그린 뒤 <b>6,257.45</b>로 마감해 <b>6,300선이 붕괴</b>. 반면 <b>코스닥은 매수 사이드카가 발동</b>되며 <b>737.35(+2.44%)</b>로 올라 <b>대형주와 중소형주가 정반대로 갈린 하루</b>.</div>
+          <div class="flow">
+            <div class="f sell"><span class="lab">외국인 · 코스피</span><span class="amt tnum">-2조 8,264억</span><span class="note">하루 만에 대규모 차익 실현</span></div>
+            <div class="f sell"><span class="lab">기관 · 코스피</span><span class="amt tnum">-1조 9,477억</span><span class="note">외국인과 동반 매도</span></div>
+            <div class="f buy"><span class="lab">개인 · 코스피</span><span class="amt tnum">+4조 6,000억</span><span class="note">전일 매도분을 되사들임</span></div>
+            <div class="f buy"><span class="lab">기관 · 코스닥</span><span class="amt tnum">+1,670억</span><span class="note">개인도 +336억 순매수</span></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">삼성전자 <b class="down">-8.76%</b></span>
+            <span class="stk">SK하이닉스 <b class="down">-8.79%</b></span>
+            <span class="stk">삼성전기 <b class="up">강세</b></span>
+            <span class="stk">펩트론 <b class="up">강세</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>하락의 성격은 악재가 아니라 차익 실현.</b> 새로운 부정적 재료가 나온 것이 아니라, <b>전 거래일 +1,001.89p(+17.91%)</b>라는 역사상 최대 폭등에 대한 되돌림이 수급으로 나타난 형태. 그럼에도 <b>-338.00p</b>는 절대 낙폭 기준으로 여전히 큰 수준.</li>
+            <li><b>수급이 정확히 하루 만에 뒤집힘</b> — 금요일 <b>외국인 +7.6조 / 개인 -5.2조</b>였던 구도가 어제는 <b>외국인 -2조 8,264억 · 기관 -1조 9,477억(합계 약 4.8조 순매도)</b> 대 <b>개인 +4.6조 순매수</b>로 완전히 역전. <b>폭등 구간에서 판 개인이 다시 받아내는</b> 형태여서 매물 소화 과정으로 볼 여지가 있으나, <b>외국인 매수의 연속성이 하루도 이어지지 않았다</b>는 점이 부담.</li>
+            <li><b>반도체 대장주가 낙폭을 주도</b> — <b>삼성전자 239,500원(-23,000원, -8.76%)</b>, <b>SK하이닉스 1,567,000원(-151,000원, -8.79%)</b>. 직전 거래일 <b>+27.05% · +29.80%(상한가)</b>로 뛴 상승분의 상당 부분을 반납했고, 두 종목의 하락만으로 지수 낙폭의 대부분이 설명되는 구조.</li>
+            <li><b>코스닥은 완전히 다른 장이었음</b> — <b>737.35(+17.59p, +2.44%)</b>로 <b>매수 사이드카</b>까지 발동. 코스피 대형주에서 빠진 자금이 중소형·바이오·부품주로 이동한 순환매 성격이 강했고, <b>삼성전기·펩트론</b> 등이 강세를 보임. 코스닥 수급은 <b>기관 +1,670억 · 개인 +336억</b>으로 국내 주체가 지수를 떠받침.</li>
+            <li>원/달러는 <b>1,429.8원(+5.8원)</b>으로 상승 마감하며 <b>나흘 연속 이어지던 원화 강세가 중단</b>. <b>외국인의 대규모 순매도</b>가 환율에 곧바로 반영된 결과로, 금요일 <b>1,424.0원</b>에서 1,430원선으로 되밀림.</li>
+            <li><b>변동성의 절대 수준 자체는 낮아졌다는 해석도 있음.</b> 지난주 <b>이틀 연속 서킷브레이커(7/28·7/29) → 사상 최대 폭등(7/31) → 5%대 급락(8/3)</b>으로 이어지는 흐름이지만, 어제 장중 진폭은 약 <b>2.7%</b> 수준으로 지난주 대비 축소. <b>7월 31일 시행된 단일 종목 레버리지 ETF 현금예탁 요건 강화</b>가 증폭 수급을 일부 눌렀다는 평가가 나옴.</li>
+            <li><b>결정적으로, 어제 국내 급락은 간밤 미국 강세를 보지 못한 상태에서 나온 것.</b> 코스피 마감(15:30 KST) 이후 뉴욕에서 <b>이란 협상 재개 → 유가 -5.97% → 나스닥 +2.13%</b>가 전개됐으므로, <b>어제의 하락 이유와 오늘의 대외 여건은 시차가 어긋나 있음</b>.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>🔎 오늘의 관전 포인트 <span class="k">8/4(화)</span></h3>
+          <ul class="notes">
+            <li><b>오늘 국내 최대 지표는 한국 7월 소비자물가.</b> 6월 <b>+3.2%</b>는 2023년 12월 이후 최고 상승률이었고, <b>석유 최고가격제</b> 시행 효과와 함께 <b>3%대를 유지하는지, 아래로 내려가는지</b>가 핵심. 간밤 <b>WTI -5.97%</b>는 7월 수치 자체보다 <b>8월 이후 물가 경로 기대</b>를 낮추는 재료여서, 지표가 다소 높게 나와도 시장 해석이 완화적으로 갈릴 여지가 있음.</li>
+            <li><b>대외 여건은 어제보다 명백히 개선된 상태로 출발.</b> <b>다우 사상 최고 · 나스닥 +2.13% · 10년물 4.70%(-5bp) · WTI $80 하회</b>는 모두 어제 국내 장에 반영되지 않은 재료. 다만 어제 코스피가 <b>미국장과 무관하게 자체 수급으로</b> 5% 빠졌던 만큼, <b>갭업 출발 이후의 지속력</b>이 실제 관전 대상.</li>
+            <li><b>가장 중요한 건 여전히 외국인 수급의 연속성.</b> 금요일 <b>+7.6조</b> → 어제 <b>-2.8조</b>로 이틀 연속 극단을 오갔음. <b>외국인이 순매수로 재차 돌아서고 기관 매도 강도가 줄어드는</b> 조합이 나와야 방향성 있는 반등으로 해석 가능하며, 그렇지 않으면 <b>개인 매수에만 의존하는 취약한 구조</b>가 이어짐.</li>
+            <li><b>유가 급락은 업종별로 정반대 신호.</b> <b>항공·운송·화학·전력</b>에는 원가 하락이라는 순풍, <b>정유·조선·에너지</b>에는 역풍. 7월 내내 <b>유가 급등 → 인플레 우려</b>가 지수를 눌렀던 구간의 반대 거래가 나올 수 있는 국면이므로, 지수보다 <b>업종 로테이션 방향</b>을 먼저 확인할 필요.</li>
+            <li><b>미국 시간 오늘 밤 AMD 실적이 주간 최대 이벤트.</b> 현지시간 <b>8/4 장 마감 후</b> 발표되며, <b>AI 인프라 투자 사이클의 지속 여부</b>를 가늠할 핵심 데이터로 꼽힘. 국내 반도체 밸류체인에는 <b>내일(5일) 개장에 직접 반영</b>될 재료. 같은 날 <b>팔란티어(PLTR)</b> 실적도 예정.</li>
+            <li><b>반도체 대장주의 되돌림 폭이 오늘의 지수 방향을 결정.</b> 삼성전자·SK하이닉스가 <b>+27~30% → -8%대</b>를 이틀에 걸쳐 오간 만큼, 어제 낙폭이 <b>과도한 되돌림이었는지 추세 전환의 시작인지</b>가 오늘 갭 방향과 장중 유지력에서 판가름남. 간밤 <b>엔비디아 +2.93%</b>는 우호적이나 <b>SOX의 회복이 아직 지수 대비 뒤처져 있다</b>는 점은 균형 있게 볼 대목.</li>
+            <li><b>코스닥의 상대 강세가 이어지는지도 체크 포인트.</b> 어제 <b>코스피 -5.12% vs 코스닥 +2.44%</b>는 <b>7%p가 넘는 이례적 괴리</b>. 대형주에서 중소형주로의 순환매가 하루짜리 이벤트였는지, <b>수급이 실제로 이동한 것인지</b>는 오늘 코스닥이 강세를 유지하는지로 확인됨.</li>
+            <li><b>주간 최대 이벤트는 7일 미국 7월 고용보고서.</b> 시장은 <b>실업률 4.3%</b>(6월 4.2%)로 소폭 상승을 예상 중. 8월에는 <b>FOMC가 없어</b> 통화정책 재료가 부재한 상태여서, 고용지표와 <b>잭슨홀(케빈 워시 의장 발언)</b>까지 금리 기대가 지표에 더 민감하게 반응할 구간.</li>
+            <li><b>접근 방식은 여전히 고변동성 전제.</b> 최근 5거래일 안에 <b>서킷브레이커 · 사상 최대 폭등 · 5%대 급락 · 코스닥 매수 사이드카</b>가 모두 나왔음. 방향성보다 <b>포지션 청산과 재구축이 지배하는 장세</b>가 이어지고 있으므로, 추세 확인 전까지는 변동성 자체를 리스크로 계산하는 편이 합리적.</li>
+          </ul>
+        </section>
+
+      </div>
+    </details>
+
+    <details class="day" id="d-2026-08-03">
+      <summary>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        <span class="date-badge"><span class="d">8/3</span><span class="w">월요일</span></span>
+        <span class="headline">코스피 사상 최대 +17.91% 폭등으로 7월 마감 — 외국인 7.6조 순매수·하이닉스 상한가 · 간밤 아마존 +14.9% vs 애플 -9.5% · 오늘부터 실적·지표 슈퍼위크</span>
+        <span class="sum-chips">
+          <span class="mini up"><span class="lab">코스피</span><span class="v">+17.91%</span></span>
+          <span class="mini up"><span class="lab">코스닥</span><span class="v">+11.63%</span></span>
+        </span>
+      </summary>
+      <div class="body">
+
+        <section class="block">
+          <h3>🌙 간밤 미국 증시 <span class="k">7/31(금) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx up"><div class="idx-top"><span class="nm">다우존스</span><span class="arw">▲</span></div><div class="val tnum">52,485.03</div><div class="chg-row"><span class="chg-pt tnum">+276.97</span><span class="chg-pct tnum">+0.53%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">S&amp;P 500</span><span class="arw">▲</span></div><div class="val tnum">7,489.72</div><div class="chg-row"><span class="chg-pt tnum">+52.17</span><span class="chg-pct tnum">+0.70%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">나스닥</span><span class="arw">▲</span></div><div class="val tnum">25,373.85</div><div class="chg-row"><span class="chg-pt tnum">+251.68</span><span class="chg-pct tnum">+1.00%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">WTI 유가</span><span class="arw">▲</span></div><div class="val tnum">$85.28</div><div class="chg-row"><span class="chg-pt tnum">+1.69</span><span class="chg-pct tnum">+2.02%</span></div></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">아마존 <b class="up">+14.9%</b></span>
+            <span class="stk">애플 <b class="down">-9.5%</b></span>
+            <span class="stk">미 30년물 <b class="up">5.25%</b></span>
+            <span class="stk">SOXX <b class="up">+0.7%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>3대 지수 이틀 연속 상승으로 7월을 마감</b> — 나스닥 <b>+1.00%(25,373.85)</b>, S&amp;P 500 <b>+0.70%(7,489.72)</b>, 다우 <b>+276.97p(+0.53%)</b>. 다만 장중 상승폭은 상당 부분 반납한 <b>'강하게 열고 약하게 닫은'</b> 흐름이었음.</li>
+            <li><b>아마존이 장을 끌어올린 주역</b> — <b>+14.9% 급등</b>하며 <b>사상 최대 규모의 시가총액 증가</b>를 기록. 전일 발표한 <b>AWS 매출 $422.3억 · 성장률 +37%</b>(2021년 이후 최고)가 시간외 -7% 반응을 하루 만에 뒤집었고, <b>'AI 클라우드 수요는 가속 중'</b>이라는 서사를 시장이 최종적으로 받아들인 결과.</li>
+            <li><b>반대편에 애플</b> — <b>-9.5%로 2025년 4월 이후 최대 낙폭</b>. FQ4 매출 가이던스가 실망스러웠고 <b>서비스 부문과 중국 매출이 컨센 하회</b>. 특히 <b>부품 공급난(component shortages)이 매출 전망을 눌렀다</b>고 명시한 점이 핵심 — <b>메모리·부품 가격 급등이 세트업체 실적을 갉아먹는 구조</b>가 미국 대장주에서도 확인됨.</li>
+            <li><b>반도체는 상승했지만 내부는 갈렸음</b> — 아이셰어즈 반도체 ETF(SOXX) <b>+0.7%</b>로 반등했으나 <b>메모리 관련주는 상대적으로 부진(lagged)</b>. AI 인프라 수요 확인과 메모리 가격 논쟁이 섹터 내에서 다른 방향으로 작용.</li>
+            <li><b>여전한 부담은 채권금리</b> — <b>10년물이 4.7%를 상회</b>했고 <b>30년물은 5.25%(+약 4bp)로 이번 주 2007년 이후 최고 수준</b>을 다시 경신. 주가가 오르는 와중에도 장기금리가 함께 뛰는 조합은 고밸류 성장주에 계속 할인율 압박으로 남음.</li>
+            <li><b>유가는 다시 반등</b> — <b>WTI 9월물 $85.28(+2.02%)</b>, 브렌트 <b>$88.46(+1.82%)</b>. 전일 되돌림을 하루 만에 되짚으며 <b>월간 기준으로는 상승</b>. 국내 항공·운송·내수엔 원가 역풍, 정유·조선엔 우호 재료로 방향이 다시 뒤집힌 상태.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>📊 코스피 · 코스닥 <span class="k">7/31(금) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx up"><div class="idx-top"><span class="nm">코스피</span><span class="arw">▲</span></div><div class="val tnum">6,595.45</div><div class="chg-row"><span class="chg-pt tnum">+1,001.89</span><span class="chg-pct tnum">+17.91%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">코스닥</span><span class="arw">▲</span></div><div class="val tnum">719.76</div><div class="chg-row"><span class="chg-pt tnum">+74.98</span><span class="chg-pct tnum">+11.63%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">원/달러 환율</span><span class="arw">▼</span></div><div class="val tnum">1,424.0</div><div class="chg-row"><span class="chg-pt tnum">-13.4원</span><span class="chg-pct">나흘째 원화 강세</span></div></div>
+          </div>
+          <div class="kv" style="margin:8px 0 12px"><b>코스피 +17.91%(+1,001.89p)는 상승률·상승폭 모두 역대 최대</b>. 5,500대에서 하루 만에 <b>6,595.45</b>로 뛰어오르며 <b>6,000선을 단숨에 회복</b>했고, 코스닥도 <b>+11.63%로 역대 상승률 2위</b>. 사흘간 약 -17% 급락을 하루에 되돌린 <b>기록적 롤러코스터</b>로 7월을 마감.</div>
+          <div class="flow">
+            <div class="f buy"><span class="lab">외국인 · 코스피</span><span class="amt tnum">+7조 5,700억</span><span class="note">개장 2시간 만에 7조 · 역대급 순매수</span></div>
+            <div class="f sell"><span class="lab">기관 · 코스피</span><span class="amt tnum">-2조 1,000억</span><span class="note">차익 실현 매도</span></div>
+            <div class="f sell"><span class="lab">개인 · 코스피</span><span class="amt tnum">-5조 2,000억</span><span class="note">급등에 대량 차익 실현</span></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">SK하이닉스 <b class="up">+29.80%</b><span class="tag-out">상한가</span></span>
+            <span class="stk">삼성전자 <b class="up">+27.05%</b></span>
+            <span class="stk">SK스퀘어 <b class="up">+29.91%</b><span class="tag-out">상한가</span></span>
+            <span class="stk">삼성전기 <b class="up">상한가</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>폭등의 방아쇠는 미국 빅테크 실적</b> — <b>아마존 AWS +37% · 마이크로소프트 Azure +43%</b>로 하이퍼스케일러 두 곳이 연속으로 <b>AI 인프라 수요 가속</b>을 확인시키면서, 7월 폭락의 명분이던 <b>'AI 수요 둔화' 서사가 정면으로 반박</b>됨. 여기에 삼성전자 컨콜의 <b>HBM4 3배 확대 · 2027년 공급 부족 심화</b> 코멘트가 뒤늦게 반영.</li>
+            <li><b>수급은 완전한 외국인 장.</b> 외국인이 <b>개장 2시간 만에 7조 원을 담았고</b> 종가 기준 코스피에서만 <b>7조 5,700억 순매수</b>. 반면 <b>개인 -5조 2,000억 · 기관 -2조 1,000억</b>으로 <b>국내 주체는 전량 차익 실현</b> — 최근 폭락 구간에서 물량을 받아냈던 쪽과 정반대 구도.</li>
+            <li><b>반도체 대장주는 사상 초유의 상승률</b> — <b>SK하이닉스 1,716,000원(+29.80%, 상한가)</b>, <b>삼성전자 263,000원(+27.05%, 역대 최고 상승률)</b>. 외국인 순매수는 <b>SK하이닉스 한 종목에만 5조 원 이상</b>이 집중됐고, <b>SK스퀘어(+29.91%)·삼성전기</b>도 상한가.</li>
+            <li><b>코스닥도 719.76(+11.63%)으로 700선을 즉시 회복</b>. 전일까지 낙폭이 코스피보다 컸던 소부장·장비주가 되돌림 반등을 주도.</li>
+            <li>원/달러는 <b>1,424.0원(-13.4원)</b>으로 <b>1,420원대까지 급락</b>, 나흘 연속 원화 강세. <b>외국인 대규모 순매수 자금 유입</b>이 환율을 직접 눌렀음.</li>
+            <li><b>다만 7월 전체로는 여전히 큰 폭의 하락월.</b> 하루 +17.9%에도 <b>주간 기준으로는 1%대 하락</b>이었고, 월초 8,300대에서 시작한 지수는 6,595로 끝남. <b>이틀 연속 서킷브레이커(7/28·7/29) 직후 하루 만의 사상 최대 폭등</b>이라는 극단적 변동성이 한 주에 모두 나온 셈.</li>
+            <li>금융당국은 <b>단일 종목 레버리지 ETF 개인투자자 현금예탁금 요건 강화 시점을 7월 31일로 앞당겨</b> 시행. 폭락·폭등을 증폭시킨 레버리지 수급에 대한 제도적 제동이 걸린 상태.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>🔎 오늘의 관전 포인트 <span class="k">8/3(월)</span></h3>
+          <ul class="notes">
+            <li><b>이번 주는 'AI 실적 + 미국 고용지표'가 분수령.</b> <b>4일 AMD</b>(현지시간 장 마감 후), <b>5일 샌디스크</b> 실적이 예정돼 있고, <b>7일 미국 7월 고용보고서</b>가 주간 최대 이벤트. 시장은 <b>실업률 4.3%</b>(6월 4.2%)로 소폭 상승을 예상 중. 8월엔 <b>FOMC가 없어</b> 통화정책 재료는 <b>잭슨홀에서 케빈 워시 의장 발언</b>으로 미뤄진 상태.</li>
+            <li><b>오늘 지표는 제조업 PMI 라인.</b> <b>미국 7월 ISM 제조업 PMI · 6월 건설지출 · S&amp;P 글로벌 제조업 PMI</b>와 함께 <b>유럽·중국의 7월 제조업 PMI</b>가 발표. 폭등 직후 첫 거래일인 만큼 지표보다 <b>수급의 연속성</b>이 먼저 확인될 구간.</li>
+            <li><b>내일(4일) 한국 7월 소비자물가가 국내 최대 지표.</b> 6월 <b>+3.2%</b>는 2023년 12월 이후 최고 상승률이었고, <b>석유 최고가격제</b> 시행 이후 <b>3% 아래로 내려갔는지</b>가 관건. 유가가 다시 <b>WTI +2.02%</b>로 반등한 터라 물가 경로에 대한 시장 해석이 갈릴 수 있음.</li>
+            <li><b>가장 중요한 건 외국인 순매수가 이틀 이상 이어지는지.</b> 금요일 <b>7조 5,700억</b>은 역대급 규모지만, <b>개인·기관이 합쳐 7조 3,000억을 팔아넘긴</b> 구조라 외국인 매수가 멈추는 순간 지지대가 사라짐. <b>외국인 연속 순매수 + 국내 주체 매도 강도 완화</b> 조합이 나와야 추세 전환으로 해석 가능.</li>
+            <li><b>애플의 '부품 공급난' 언급은 한국 반도체에 양면적 신호.</b> 메모리·부품 가격 상승이 <b>세트업체 마진을 압박</b>한다는 사실이 애플(-9.5%)·삼성전자 완제품 부문(약 8,000억 적자)에서 연달아 확인됨. <b>메모리 공급자에겐 가격 협상력의 증거</b>지만, <b>세트·부품 수요 위축 우려</b>로도 읽힐 수 있어 오늘 업종 내 차별화 여부를 지켜볼 필요.</li>
+            <li><b>SOXX는 올랐지만 메모리주는 뒤처졌다는 점이 경고 신호.</b> 금요일 국내 메모리 대장주가 <b>+27~30%</b> 급등한 반면 간밤 미국 메모리 관련주는 상대적으로 부진했음. <b>금요일 폭등이 얼마나 선반영이었는지</b>를 오늘 개장 초반 갭 방향이 가늠해 줄 것.</li>
+            <li><b>금리는 여전히 반대 방향.</b> <b>10년물 4.7% 상회 · 30년물 5.25%(2007년 이후 최고)</b>는 지수 급반등과 무관하게 유지되고 있는 압박 요인. 주가가 오르는데 장기금리도 오르는 국면에서는 <b>밸류에이션보다 실적 가시성</b>이 종목 선택 기준이 되는 경향.</li>
+            <li><b>증권가 시각은 '반등은 하되 V자는 아니다'로 수렴.</b> 대신증권은 <b>5,700~5,800선 안착 시 8,200선까지 회복 가능</b>, 유안타증권은 <b>5,150선을 최악의 마지노선</b>으로 두고 <b>6,350선까지 기간 조정 후 계단식 저점 상향</b>을 제시. 신한투자증권은 <b>수급 바닥 확인 시도</b>를 언급하며 <b>반도체와 함께 화장품·운송·금융 등 실적 뒷받침 업종</b>의 트레이딩 유효성을 짚음.</li>
+            <li><b>변동성 관리는 이번 주에도 최우선.</b> 한 주 안에 <b>이틀 연속 서킷브레이커</b>와 <b>역대 최대 상승률</b>이 동시에 나왔고, 사흘 -17% 뒤 하루 +18%라는 흐름은 <b>방향성보다 포지션 청산이 지배하는 장세</b>를 의미. <b>레버리지 ETF 규제 강화</b>가 막 시작된 시점이기도 해, 방향 확인 전까지는 고변동성을 전제로 접근하는 편이 합리적.</li>
+          </ul>
+        </section>
+
+      </div>
+    </details>
+
+    <details class="day" id="d-2026-07-31">
+      <summary>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        <span class="date-badge"><span class="d">7/31</span><span class="w">금요일</span></span>
+        <span class="headline">삼성전자 컨콜 랠리를 오후에 반납 — 코스피 장중 +5% 뒤 5,593 마감 · 간밤 뉴욕은 나스닥 +2.78% 급반등 · 오늘 7월 마지막 거래일</span>
+        <span class="sum-chips">
+          <span class="mini down"><span class="lab">코스피</span><span class="v">-1.23%</span></span>
+          <span class="mini down"><span class="lab">코스닥</span><span class="v">-2.70%</span></span>
+        </span>
+      </summary>
+      <div class="body">
+
+        <section class="block">
+          <h3>🌙 간밤 미국 증시 <span class="k">7/30(목) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx up"><div class="idx-top"><span class="nm">다우존스</span><span class="arw">▲</span></div><div class="val tnum">52,208.06</div><div class="chg-row"><span class="chg-pt tnum">+613.92</span><span class="chg-pct tnum">+1.20%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">S&amp;P 500</span><span class="arw">▲</span></div><div class="val tnum">7,437.63</div><div class="chg-row"><span class="chg-pt tnum">+121.48</span><span class="chg-pct tnum">+1.66%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">나스닥</span><span class="arw">▲</span></div><div class="val tnum">25,122.18</div><div class="chg-row"><span class="chg-pt tnum">+679.24</span><span class="chg-pct tnum">+2.78%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">WTI 유가</span><span class="arw">▼</span></div><div class="val tnum">$83.59</div><div class="chg-row"><span class="chg-pt tnum">-0.87</span><span class="chg-pct tnum">-1.03%</span></div></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">아마존 시간외 <b class="down">-7%</b></span>
+            <span class="stk">애플 시간외 <b class="down">-4%</b></span>
+            <span class="stk">미 30년물 <b class="up">5.208%</b></span>
+            <span class="stk">달러/엔 <b class="down">-2.51%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>전일 급락을 하루 만에 되돌린 반등</b> — <b>나스닥 +2.78%(25,122.18)</b>로 <b>6거래일 연속 하락 행진을 마감</b>했고, S&amp;P 500 <b>+1.66%</b>, 다우 <b>+613.92p(+1.20%)</b>. <b>마이크로소프트 호실적과 반도체주 회복</b>이 반등을 주도.</li>
+            <li><b>6월 PCE 물가가 시장 전망에 부합</b>하며 인플레 불안을 일부 진정. 헤드라인 <b>전년비 +3.7%</b>, 근원 <b>+3.3%</b>. 특히 <b>월간 헤드라인은 -0.1%</b>로 5월(+0.5%)에서 방향을 틀었고 <b>근원 월간도 +0.1%</b>(5월 0.3%)로 둔화 — 다만 연준 목표 2%와는 여전히 거리가 큼.</li>
+            <li><b>그럼에도 장기금리는 되레 더 올랐다는 점이 부담.</b> <b>30년물 5.208%(+6.5bp)</b>로 <b>장중 5.244%까지 올라 2007년 7월 이후 최고</b>, <b>10년물 4.667%(+4.5bp)</b>, 2년물 4.238%(+0.2bp). 2·10년 스프레드는 장중 44.4bp까지 확대(5월 29일 이후 최대)돼 <b>'물가 둔화 ≠ 금리 안정'</b> 구도가 유지.</li>
+            <li><b>유가는 이틀 만에 되돌림</b> — <b>WTI 9월물 $83.59(-1.03%)</b>, 브렌트 <b>$89.03(-1.88%)</b>. <b>사우디 주도 다국적 해양 방위 연합 구상</b>과 <b>호르무즈 해협 재개방 가능성</b>이 지정학 프리미엄을 눌렀음. 전일 국내 증시를 압박했던 '유가 급등발 인플레' 재료는 일단 완화.</li>
+            <li><b>달러 약세가 뚜렷</b> — 달러인덱스 <b>99.91(-0.97%)</b>, <b>달러/엔 159.31(-2.51%)</b>로 <b>일본 당국 시장 개입설</b>이 부상. 유로/달러 1.1533(+0.57%). 달러 약세와 PCE 둔화에 현물금은 온스당 <b>$4,104.59(+1%)</b>로 상승.</li>
+            <li><b>장 마감 후 아마존·애플 실적은 '숫자는 좋고 주가는 빠지는' 패턴 반복.</b> 아마존 <b>AWS 매출 $422.3억 · 성장률 +37%</b>로 컨센($405.4억)을 크게 상회하며 <b>2021년 이후 최고 성장률</b>을 기록했지만, <b>캐펙스 부담 우려</b>로 주가는 시간외 <b>-7%</b>.</li>
+            <li>애플은 FQ3 <b>EPS $2.02</b>(컨센 +13센트), 매출 <b>$1,094.2억(+16%)</b>으로 상회했으나 <b>서비스 부문이 컨센 하회</b>하며 시간외 <b>-4%</b>. MS·아마존·메타로 이어진 하이퍼스케일러 3사 모두 <b>'AI 수요는 견조하나 비용이 문제'</b>라는 동일한 서사를 남김.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>📊 코스피 · 코스닥 <span class="k">7/30(목) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx down"><div class="idx-top"><span class="nm">코스피</span><span class="arw">▼</span></div><div class="val tnum">5,593.56</div><div class="chg-row"><span class="chg-pt tnum">-69.68</span><span class="chg-pct tnum">-1.23%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">코스닥</span><span class="arw">▼</span></div><div class="val tnum">644.78</div><div class="chg-row"><span class="chg-pt tnum">-17.90</span><span class="chg-pct tnum">-2.70%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">원/달러 환율</span><span class="arw">▼</span></div><div class="val tnum">1,437.4</div><div class="chg-row"><span class="chg-pt tnum">-9.3원</span><span class="chg-pct">사흘째 원화 강세</span></div></div>
+          </div>
+          <div class="kv" style="margin:8px 0 12px">5,681.77로 출발해 <b>장중 5,976.82(+5%대)</b>까지 오르며 6,000선 회복을 눈앞에 뒀으나 <b>오후 매도세에 하락 전환</b>. 서킷브레이커는 없었지만 <b>고점 대비 약 380p를 반납</b>한 롤러코스터 장세. <b>7월 한 달 코스피는 8,300대 → 5,500대, -34.01%</b>.</div>
+          <div class="flow">
+            <div class="f buy"><span class="lab">외국인 · 코스피</span><span class="amt tnum">+1조 3,389억</span><span class="note">닷새 만에 순매수 전환</span></div>
+            <div class="f buy"><span class="lab">기관 · 코스피</span><span class="amt tnum">+664억</span><span class="note">이틀째 순매수</span></div>
+            <div class="f sell"><span class="lab">개인 · 코스피</span><span class="amt tnum">-1조 4,250억</span><span class="note">이틀 연속 순매도</span></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">삼성전자 <b class="down">-0.72%</b></span>
+            <span class="stk">SK하이닉스 <b class="down">-5.64%</b></span>
+            <span class="stk">삼성전기 <b class="down">-14.58%</b></span>
+            <span class="stk">주성엔지니어링 <b class="down">-15.33%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>삼성전자 2분기 확정실적은 창사 이래 최대.</b> 연결 <b>매출 171조 원 · 영업이익 89조 5,000억 원</b>(전년비 약 18배). <b>DS(반도체) 부문 매출 127조 5,000억 · 영업이익 89조 2,000억</b>으로 <b>영업이익률 70%</b>, 전사 영업이익의 <b>99.7%</b>를 반도체가 책임짐. D램·낸드 모두 최대 비트 판매량 기록.</li>
+            <li>반면 <b>완제품(스마트폰·TV·가전)은 약 8,000억 원 적자로 전환</b> — <b>부품 가격 급등이 세트 사업의 원가를 직접 압박</b>하는 구조가 처음으로 실적에 드러남. 메모리 초호황의 이면이 확인된 대목.</li>
+            <li><b>컨콜 톤은 시장 우려를 상당 부분 진정.</b> <b>HBM4 판매를 3분기에 전분기 대비 3배 이상 확대</b>, <b>하반기 HBM 매출의 60% 이상을 HBM4로</b> 전환, <b>HBM4E 내년 양산</b>, 파운드리 흑자 전환 목표를 제시했고 <b>2027년 메모리 공급 부족이 더 깊어질 것</b>이라는 전망까지 내놓음. 이에 삼성전자는 <b>오전 10시 55분 225,000원(+7.91%)</b>까지 급등.</li>
+            <li><b>그러나 오후 들어 랠리를 대부분 반납</b> — 삼성전자는 <b>207,000원(-0.72%)</b>으로 하락 마감. 전일 실적 실망이 컸던 <b>SK하이닉스는 1,322,000원(-5.64%, -79,000원)</b>으로 낙폭을 키우며 지수를 눌렀음.</li>
+            <li><b>수급은 전일과 정반대로 다시 뒤집힘</b> — <b>외국인이 1조 3,389억 순매수로 전환</b>(나흘 연속 순매도 종료)하고 기관도 664억 순매수했으나, <b>개인이 1조 4,250억을 순매도</b>하며 반등을 되돌림. 코스닥에서도 <b>외국인 +2,476억</b> vs <b>기관 -1,436억 · 개인 -1,105억</b>.</li>
+            <li><b>코스닥의 낙폭이 코스피의 두 배 이상</b> — <b>644.78(-2.70%)</b>로 사흘 연속 하락. 장중 고점 677.19에서 밀렸고, 소부장·장비주(주성엔지니어링 -15.33%)와 부품주(삼성전기 -14.58%)의 낙폭이 대형주보다 훨씬 컸음.</li>
+            <li>원/달러는 <b>1,437.4원(-9.3원)</b>으로 사흘 연속 하락. 간밤 <b>달러인덱스 -0.97% · 엔화 급등</b>이 아시아 통화 전반의 강세 압력으로 작용하는 국면.</li>
+            <li><b>밸류에이션은 역사적 저점 영역.</b> 증권가는 삼성전자·SK하이닉스의 <b>PER이 4~5배로 역사상 최저 수준</b>이며 <b>수급에 의한 변동성 조정이 상당 부분 진행됐다</b>고 평가. 다만 <b>레버리지 ETF 청산 압력은 3~4주 후에야 의미 있게 완화</b>될 것으로 봄.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>🔎 오늘의 관전 포인트 <span class="k">7/31(금)</span></h3>
+          <ul class="notes">
+            <li><b>오늘은 7월 마지막 거래일.</b> 코스피가 월간 <b>-34%</b>라는 기록적 낙폭으로 7월을 닫는 만큼, <b>월말 리밸런싱·윈도드레싱 수급</b>과 <b>8월 첫 주를 앞둔 포지션 조정</b>이 장중 변동성을 키울 수 있는 구간. 지수 방향보다 <b>수급 주체별 흐름</b>을 먼저 확인할 필요.</li>
+            <li><b>간밤 뉴욕 반등은 우호적 출발 재료.</b> <b>나스닥 +2.78%</b>로 6일 연속 하락이 끊겼고 <b>반도체주가 반등을 주도</b>했다는 점이 국내 반도체 밸류체인에 직접적인 심리 개선 요인. 다만 어제도 <b>갭업 출발 후 오후 반락</b>했던 만큼 <b>개장 강세의 지속력</b>이 관건.</li>
+            <li><b>AWS +37%는 HBM 수요 논리를 지지하는 가장 강한 증거.</b> <b>2021년 이후 최고 성장률</b>이자 컨센 대폭 상회로, MS의 <b>Azure +43%</b>에 이어 <b>하이퍼스케일러 두 곳이 연속으로 AI 인프라 수요 가속을 확인</b>. 최근 폭락의 명분이던 'AI 수요 둔화' 서사에는 반대되는 실증 데이터.</li>
+            <li><b>다만 시간외 주가는 아마존 -7% · 애플 -4%로 반대 방향.</b> 실적 서프라이즈에도 <b>캐펙스 부담과 서비스 부문 부진</b>에 주가가 밀린 만큼, 오늘 국내 장에서도 <b>'수요는 확인, 수익성은 의문'</b>이라는 이중 신호가 업종 내 차별화로 나타날 가능성. 장비·소재 대비 메모리의 상대 강도 확인이 필요.</li>
+            <li><b>금리와 유가는 방향이 엇갈렸다.</b> <b>WTI -1.03%로 되돌림</b>은 인플레·원가 부담 완화 요인이지만, <b>30년물 5.208%(2007년 이후 최고)</b>는 고밸류 성장주 할인율 압박을 그대로 유지. <b>PCE 둔화에도 장기금리가 올랐다는 조합</b>이 오늘 시장의 가장 까다로운 부분.</li>
+            <li><b>외국인의 순매수가 이어지는지가 반등의 첫 조건.</b> 어제 <b>1조 3,389억 순매수로 전환</b>했으나 <b>개인 1조 4,250억 순매도</b>에 상쇄됐음. 외국인 매수가 이틀 이상 연속되고 개인 매도 강도가 줄어드는 조합이 나와야 저점 형성 신호로 해석 가능한 구간.</li>
+            <li><b>삼성전자 컨콜 재료의 시차 반영 여부.</b> <b>2027년 공급 부족 심화 · HBM4 3배 확대</b>는 중기 실적 가시성을 높이는 코멘트인데 어제는 장중에만 반영되고 종가로는 소멸. <b>어제 고점 225,000원과 종가 207,000원 사이의 갭</b>을 오늘 어느 쪽으로 메우는지가 반도체 섹터 심리의 척도.</li>
+            <li><b>환율·엔화 흐름도 체크 포인트.</b> <b>달러/엔 -2.51%(개입설)</b>와 달러인덱스 약세가 이어지면 원/달러 추가 하락과 <b>외국인 수급 개선</b>으로 연결될 수 있는 반면, 엔화 급변동은 아시아 증시 전반의 <b>캐리 트레이드 되돌림</b> 리스크로도 작용할 수 있음.</li>
+            <li><b>변동성 관리는 여전히 최우선.</b> 한 달 만에 지수가 -34% 조정된 직후이고, 어제도 장중 등락폭이 <b>380p</b>에 달했음. <b>레버리지 ETF 청산 압력이 3~4주 남아 있다</b>는 시각을 감안하면, 방향이 확인되기 전까지는 고변동성을 전제로 접근하는 편이 합리적.</li>
+          </ul>
+        </section>
+
+      </div>
+    </details>
+
+    <details class="day" id="d-2026-07-30">
+      <summary>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        <span class="date-badge"><span class="d">7/30</span><span class="w">목요일</span></span>
+        <span class="headline">FOMC 동결에도 장기금리 급등 — 코스피 사상 첫 '이틀 연속' 서킷브레이커로 6,000선 붕괴 · 오늘 삼성전자 확정실적</span>
+        <span class="sum-chips">
+          <span class="mini down"><span class="lab">코스피</span><span class="v">-5.98%</span></span>
+          <span class="mini down"><span class="lab">코스닥</span><span class="v">-6.12%</span></span>
+        </span>
+      </summary>
+      <div class="body">
+
+        <section class="block">
+          <h3>🌙 간밤 미국 증시 <span class="k">7/29(수) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx down"><div class="idx-top"><span class="nm">다우존스</span><span class="arw">▼</span></div><div class="val tnum">51,594.14</div><div class="chg-row"><span class="chg-pt tnum">-1,153.18</span><span class="chg-pct tnum">-2.19%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">S&amp;P 500</span><span class="arw">▼</span></div><div class="val tnum">7,316.15</div><div class="chg-row"><span class="chg-pt tnum">-112.63</span><span class="chg-pct tnum">-1.52%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">나스닥</span><span class="arw">▼</span></div><div class="val tnum">24,442.94</div><div class="chg-row"><span class="chg-pt tnum">-433.97</span><span class="chg-pct tnum">-1.74%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">WTI 유가</span><span class="arw">▲</span></div><div class="val tnum">$84.46</div><div class="chg-row"><span class="chg-pt tnum">+5.21</span><span class="chg-pct tnum">+6.60%</span></div></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">마이크로소프트 시간외 <b class="up">+7%</b></span>
+            <span class="stk">메타 시간외 <b class="down">-4%</b></span>
+            <span class="stk">SOX 7월 누적 <b class="down">-17%</b></span>
+            <span class="stk">나스닥 고점 대비 <b class="down">-10%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>FOMC는 기준금리를 3.50~3.75%로 동결</b>했으나, 정작 <b>채권시장이 "연준이 인플레 대응에 뒤처졌다"고 반응</b>하며 3대 지수가 동반 급락. <b>다우 -1,153.18p(-2.19%)</b>는 <b>2025년 4월 이후 최악의 하루</b>. 표결에서 <b>12명 중 3명이 0.25%p 인상을 선호</b>하는 소수의견을 냈다는 점도 매파 부담으로 작용.</li>
+            <li>핵심은 <b>장기금리 급등</b> — <b>30년물 +10bp로 5.2% 상회, 2007년 이후 최고</b>. <b>10년물도 +7bp로 4.67% 상회</b>. 동결에도 장기 인플레 기대가 튀어오르며 고밸류 성장주 할인율 부담이 커짐.</li>
+            <li><b>유가 급반등이 트리거</b> — <b>WTI 9월물 $84.46(+6.60%)</b>, 브렌트 $89.53. <b>중동 적대행위 재점화</b>(미군 겨냥 이란 기습 공격을 미군이 요격)로 지정학 프리미엄이 되돌려짐. 이틀간 국내외 시장이 기대던 <b>'유가 하락 → 인플레 완화'</b> 논리가 하루 만에 반전.</li>
+            <li><b>나스닥은 사상 최고가 대비 10% 이상 하락</b>해 기술적 조정 국면 진입. <b>필라델피아 반도체지수는 7월 한 달 -17%</b>로 <b>2022년 6월 이후 최악의 월간 성적</b> — 상반기 +101% 급등분의 급격한 되돌림.</li>
+            <li><b>장 마감 후 빅테크 실적은 오히려 양호 — 특히 MS.</b> 마이크로소프트 FY4Q <b>매출 $900.1억(+18%, 컨센 $876억 상회)</b>, <b>Azure +43%로 성장 가속</b>(전분기 40%), 연간 Azure 매출 <b>최초 1,000억 달러 돌파</b>, 조정 EPS <b>$4.74</b>(컨센 $4.24). FY2027 캐펙스 $2,550~2,600억을 제시했지만 <b>주가는 시간외 +7%</b>.</li>
+            <li>반면 <b>메타는 엇갈림</b> — 매출 $608억(+28%)으로 상회했으나 <b>EPS는 컨센 14% 하회</b>, 연간 캐펙스를 <b>$1,250~1,450억으로 상향</b>. '지출은 늘고 이익은 줄어든다'는 <b>AI 캐펙스 회의론</b>을 자극해 시간외 -4%.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>📊 코스피 · 코스닥 <span class="k">7/29(수) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx down"><div class="idx-top"><span class="nm">코스피</span><span class="arw">▼</span></div><div class="val tnum">5,663.24</div><div class="chg-row"><span class="chg-pt tnum">-360.42</span><span class="chg-pct tnum">-5.98%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">코스닥</span><span class="arw">▼</span></div><div class="val tnum">662.68</div><div class="chg-row"><span class="chg-pt tnum">-43.17</span><span class="chg-pct tnum">-6.12%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">원/달러 환율</span><span class="arw">▼</span></div><div class="val tnum">1,446.7</div><div class="chg-row"><span class="chg-pt tnum">-15.8원</span><span class="chg-pct">원화 강세</span></div></div>
+          </div>
+          <div class="kv" style="margin:8px 0 12px">양 시장 <b>매도 사이드카</b>에 이어 코스닥 12시 19분 12초 · 코스피 12시 32분 32초 <b>1단계 서킷브레이커</b> 발동. <b>1966년 제도 도입 이래 사상 첫 '이틀 연속 동반 서킷브레이커'</b> · <b>6,000선이 붕괴</b>되며 코스피 5,663.24 마감.</div>
+          <div class="flow">
+            <div class="f buy"><span class="lab">기관 · 코스피</span><span class="amt tnum">+3조 6,373억</span><span class="note">지수 방어 주체로 전환</span></div>
+            <div class="f sell"><span class="lab">개인 · 코스피</span><span class="amt tnum">-2조 9,218억</span><span class="note">저가매수 → 투매로 반전</span></div>
+            <div class="f sell"><span class="lab">외국인 · 코스피</span><span class="amt tnum">-8,032억</span><span class="note">나흘 연속 순매도</span></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">삼성전자 <b class="down">-7.73%</b></span>
+            <span class="stk">SK하이닉스 <b class="down">-11.94%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>폭락의 직접 트리거는 SK하이닉스 2분기 실적의 컨센서스 하회.</b> 매출 <b>79조 3,187억</b>, 영업이익 <b>60조 5,426억</b>으로 시장 기대(매출 84조·영업이익 64조 안팎)에 미달. 사상 최대 실적이라도 <b>'기대치 미달'과 IR 실망감</b>이 반도체 밸류체인 전반의 투매로 번짐.</li>
+            <li>반도체 대형주 급락 — 삼성전자 <b>203,000원(-7.73%)</b>, SK하이닉스 <b>1,365,000원(-11.94%)</b>. <b>이틀 누적으로 삼성전자 약 -20%, SK하이닉스 약 -25%</b> 수준까지 밀림.</li>
+            <li><b>수급 구도가 하루 만에 완전히 뒤집힘</b> — 전일 4조 3,337억을 순매수했던 <b>개인이 2조 9,218억 순매도로 전환</b>해 투매에 가담하고, <b>기관이 3조 6,373억 순매수</b>로 지수를 받아냄. <b>외국인은 8,032억 순매도로 나흘 연속</b>이나 규모는 전일(4조 9,664억)보다 크게 축소.</li>
+            <li>코스닥은 <b>662.68(-6.12%)</b>로 <b>700선이 붕괴</b>. 코스피·코스닥 모두 이틀 연속 6% 이상 급락하는 이례적 흐름.</li>
+            <li>원/달러는 <b>1,446.7원(-15.8원)</b>으로 이틀 연속 하락. 주식 급락 국면에서 환율이 내린 것은 이례적으로, <b>월말 네고 물량</b>과 달러 약세 요인이 주식 순매도발 상승 압력을 상쇄. 다만 이 종가는 오후 3시 30분 기준으로 <b>간밤 유가 급등은 아직 반영되지 않은</b> 수치.</li>
+            <li>이틀간 코스피는 <b>6,755.75(7/27) → 5,663.24</b>로 <b>약 -16%</b> 급락 — 증권가가 제시했던 주간 밴드(6,300~7,400p)를 완전히 이탈해 <b>기존 전망 자체가 무효화</b>된 상태.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>🔎 오늘의 관전 포인트 <span class="k">7/30(목)</span></h3>
+          <ul class="notes">
+            <li><b>오늘 삼성전자 2분기 확정실적이 최대 이벤트.</b> 7월 7일 잠정치는 매출 <b>171조 원</b>·영업이익 <b>89조 4,000억 원</b>(전분기比 매출 +28%, 영업이익 +57.2%). 오늘은 <b>DS(반도체)·DX·SDC 부문별로 분리 발표</b>되며, <b>반도체 부문 영업이익 90조 원 돌파 여부</b>가 관전 포인트. <b>하이닉스가 컨센서스를 하회한 직후</b>라 시장 눈높이 대비 결과에 대한 민감도가 매우 높음.</li>
+            <li><b>컨퍼런스콜 코멘트가 숫자보다 중요할 수 있음</b> — <b>HBM4 출하량·고객사 공급 계획</b>, 7세대 <b>HBM4E 양산 진행 상황</b>, <b>파운드리 사업부 실적 개선</b> 여부가 핵심. 하이닉스 IR 실망이 폭락으로 번진 만큼 <b>가이던스의 톤</b>이 반도체 밸류체인 방향을 가를 가능성.</li>
+            <li><b>간밤 MS 실적은 국내 반도체에 우호적 재료.</b> <b>Azure +43% 성장 가속</b>과 <b>FY2027 캐펙스 $2,550~2,600억(+35%)</b>은 'AI 인프라 수요가 꺾이지 않았다'는 근거로, 최근 폭락의 명분이었던 <b>HBM·서버 D램 수요 둔화 우려를 일부 반박</b>. MS 시간외 +7%는 국내 장 심리에 완충 역할 기대.</li>
+            <li><b>다만 메타의 EPS 하회 + 캐펙스 상향(→$1,250~1,450억)은 반대 방향의 신호.</b> '캐펙스는 늘지만 수익성은 훼손된다'는 서사가 유지되면 장비·소재보다 <b>메모리 쪽 차별화</b>가 이어질 수 있음 — 오늘도 <b>업종 내 극단적 차별화</b> 가능성.</li>
+            <li><b>진짜 압박 요인은 금리와 유가.</b> <b>30년물 5.2%(2007년 이후 최고)·10년물 4.67%</b>는 고밸류 성장주에 직접적인 할인율 부담이고, <b>WTI +6.6%($84.46)</b>는 인플레 우려를 재점화. 항공·운송·내수·소비주엔 원가 역풍, 정유·조선엔 우호로 방향이 전일과 정반대로 바뀜.</li>
+            <li><b>기술적 반등 여부의 관건은 외국인 5거래일째 흐름.</b> 개인이 순매도로 전환하고 기관이 3조 6천억을 받아낸 구도는 저점 형성 과정에서 나타나기도 하나, <b>외국인 순매도가 5일째 이어지면</b> 지수 하단 방어가 기관 단독 부담으로 남는 취약한 구조.</li>
+            <li><b>오늘 밤 애플·아마존 실적</b>(미국 장 마감 후, 아마존 컨콜 ET 오후 5시). <b>AWS 성장률과 아마존 캐펙스 계획</b>이 하이퍼스케일러 3연속 확인 사격이 될지가 국내 반도체 밸류체인에 직결. 애플 FQ3 EPS 컨센서스는 약 $1.86.</li>
+            <li><b>이틀 연속 서킷브레이커 직후 구간은 변동성 관리가 우선.</b> 지수가 밴드 하단을 -16%나 이탈한 만큼 기존 목표치·밴드는 참고 가치가 낮아진 상태로, <b>방향 확인 전까지는 고변동성 전제</b>가 합리적.</li>
+          </ul>
+        </section>
+
+      </div>
+    </details>
+
+    <details class="day" id="d-2026-07-29">
+      <summary>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        <span class="date-badge"><span class="d">7/29</span><span class="w">수요일</span></span>
+        <span class="headline">서킷브레이커 폭락 — 코스피 -10.84%로 6,000선 턱걸이, 외국인 5조 투매 · 오늘 하이닉스 실적</span>
+        <span class="sum-chips">
+          <span class="mini down"><span class="lab">코스피</span><span class="v">-10.84%</span></span>
+          <span class="mini down"><span class="lab">코스닥</span><span class="v">-7.72%</span></span>
+        </span>
+      </summary>
+      <div class="body">
+
+        <section class="block">
+          <h3>🌙 간밤 미국 증시 <span class="k">7/28(화) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx up"><div class="idx-top"><span class="nm">다우존스</span><span class="arw">▲</span></div><div class="val tnum">52,747.32</div><div class="chg-row"><span class="chg-pt tnum">+537.24</span><span class="chg-pct tnum">+1.03%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">S&amp;P 500</span><span class="arw">▲</span></div><div class="val tnum">7,428.78</div><div class="chg-row"><span class="chg-pt tnum">+15.60</span><span class="chg-pct tnum">+0.21%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">나스닥</span><span class="arw">▼</span></div><div class="val tnum">24,876.91</div><div class="chg-row"><span class="chg-pt tnum">-55.17</span><span class="chg-pct tnum">-0.22%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">WTI 유가</span><span class="arw">▼</span></div><div class="val tnum">$79.25</div><div class="chg-row"><span class="chg-pt tnum">-3.35</span><span class="chg-pct tnum">-4.06%</span></div></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">필라델피아 반도체 <b class="down">-4.49%</b></span>
+            <span class="stk">SK하이닉스 ADR <b class="down">-8.98%</b></span>
+            <span class="stk">마이크론 <b class="down">-8.85%</b></span>
+            <span class="stk">AMD <b class="down">-8.15%</b></span>
+            <span class="stk">인텔 <b class="down">-5.86%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>다우는 +1.03% 급등해 사흘 연속 상승, 나스닥은 5거래일 연속 하락</b>. 지수 간 괴리가 더 벌어진 <b>극단적 혼조</b> — 유가 급락 수혜 업종으로 자금이 이동하는 사이 <b>반도체는 이틀째 투매</b>가 이어짐.</li>
+            <li>필라델피아 반도체지수 <b>-4.49%(4거래일 연속 하락)</b>. 전일 중국 DUV 노광장비 이슈에 더해 <b>AI 인프라 자금조달 모델(순환거래·부채 의존)에 대한 회의론</b>이 재점화되며 매도가 확산.</li>
+            <li>메모리가 진앙 — <b>마이크론 -8.85%($820.53)</b>, <b>SK하이닉스 ADR -8.98%($130.17)</b>, AMD -8.15%($454.62), 인텔 -5.86%($86.30). 아이셰어즈 반도체 ETF(SOXX)도 <b>-4.80%</b>.</li>
+            <li>국제유가 이틀째 급락 — <b>WTI 9월물 $79.25(-4.06%)</b>로 <b>80달러선 붕괴</b>. 미·이란 분쟁의 항구적 해결 기대가 지속되며 중동 프리미엄이 계속 빠지는 중.</li>
+            <li>미 <b>10년물 국채금리 4.602%</b>로 사흘 연속 하락 — 한 달 만의 3일 연속 내림세. 유가발 인플레 부담 완화가 금리를 눌렀지만, <b>CME 페드워치 기준 이번 FOMC 0.25%p 인상 확률 29.4%</b>, <b>9월 인상 확률은 80.8%</b>로 긴축 경계는 여전.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>📊 코스피 · 코스닥 <span class="k">7/28(화) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx down"><div class="idx-top"><span class="nm">코스피</span><span class="arw">▼</span></div><div class="val tnum">6,023.66</div><div class="chg-row"><span class="chg-pt tnum">-732.09</span><span class="chg-pct tnum">-10.84%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">코스닥</span><span class="arw">▼</span></div><div class="val tnum">705.85</div><div class="chg-row"><span class="chg-pt tnum">-59.01</span><span class="chg-pct tnum">-7.72%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">원/달러 환율</span><span class="arw">▼</span></div><div class="val tnum">1,462.5</div><div class="chg-row"><span class="chg-pt tnum">-6.0원</span><span class="chg-pct">원화 강세</span></div></div>
+          </div>
+          <div class="kv" style="margin:8px 0 12px">개장 6분 만에 <b>매도 사이드카</b>, 오전 10시 16분 <b>1단계 서킷브레이커</b>(올해 8번째) 발동. 코스피 <b>-732.09p</b> 폭락하며 <b>6,000선을 겨우 사수</b> · 외국인 <b>4조 9,664억 순매도</b>로 사흘째 투매.</div>
+          <div class="flow">
+            <div class="f sell"><span class="lab">외국인 · 코스피</span><span class="amt tnum">-4조 9,664억</span><span class="note">사흘 연속 대량 매도</span></div>
+            <div class="f buy"><span class="lab">기관 · 코스피</span><span class="amt tnum">+6,330억</span></div>
+            <div class="f buy"><span class="lab">개인 · 코스피</span><span class="amt tnum">+4조 3,337억</span><span class="note">사흘째 저가 매수</span></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">삼성전자 <b class="down">-13.39%</b></span>
+            <span class="stk">SK하이닉스 <b class="down">-14.65%</b></span>
+          </div>
+          <ul class="notes">
+            <li>간밤 SOX -4.25% 충격을 그대로 받아 <b>갭 하락 출발 → 오전 9시 6분 매도 사이드카 → 10시 16분 서킷브레이커</b>로 이어진 패닉. 약 5개월 만의 최대 낙폭이며 <b>지수는 3개월 전 수준으로 후퇴</b>.</li>
+            <li>반도체 대형주가 지수를 끌어내림 — 삼성전자 <b>220,000원(-13.39%)</b>, SK하이닉스 <b>1,550,000원(-14.65%)</b>. 전일 반등분을 하루 만에 전부 반납하고도 크게 밑돎.</li>
+            <li>코스닥은 <b>705.85(-7.72%)</b>로 700선 위태. 수급은 <b>기관 -1,339억</b> 순매도, <b>외국인 +869억·개인 +499억</b> 순매수로 코스피와 반대 구도.</li>
+            <li>원/달러는 폭락장에도 <b>1,462.5원(-6.0원)</b>으로 하락 마감 — <b>2개월 20일 만의 최저</b>. 유가 급락에 따른 달러 강세 완화와 <b>월말 네고 물량</b>이 주식 순매도발 상승 압력을 상쇄.</li>
+            <li>증권가는 급락 이후 회복 주도주 조건으로 <b>'명확한 이익 방향성 + AI 밸류체인'</b>을 제시 — 영업이익 전망치가 상향되는 에너지·반도체·증권·IT가전의 회복이 상대적으로 빠를 것으로 봄.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>🔎 오늘의 관전 포인트 <span class="k">7/29(수)</span></h3>
+          <ul class="notes">
+            <li><b>오늘 SK하이닉스 2분기 실적이 최대 분수령.</b> 컨센서스는 매출 약 84조·영업이익 약 64조 원으로 <b>사상 최대·영업이익률 75% 안팎</b>. 숫자보다 <b>하반기 가이던스와 HBM·메모리 가격 코멘트</b>가 폭락장의 방향을 가를 가능성이 큼.</li>
+            <li><b>'폭락 다음 날 반등'은 통계적으로 신뢰도가 낮다는 점에 유의.</b> 과거 유사 급락 7회 중 닷새 내 회복은 단 1회. 기술적 반등이 나오더라도 <b>지속성 확인 전까지는 변동성 구간</b>으로 보는 것이 안전.</li>
+            <li><b>간밤 미국 반도체가 이틀째 급락(SOX -4.49%, 하이닉스 ADR -9%)</b>했다는 점은 부담. 다만 <b>다우 +1.03%·S&amp;P +0.21%</b>로 시장 전체가 붕괴한 것은 아니어서, 오늘 국내 장도 <b>반도체와 비반도체의 극단적 차별화</b> 가능성.</li>
+            <li><b>외국인 수급이 4거래일째 이어질지가 핵심.</b> 사흘간 코스피 순매도 규모만 11조 원 안팎. 개인이 4조 원 넘게 받아냈지만, 외국인 매도가 더 지속되면 <b>지수 하단 방어가 개인의 체력에 달리는</b> 취약한 구도.</li>
+            <li><b>유가 -4.06%·미 금리 4.602%는 우호 재료.</b> 항공·운송·내수·소비주에 원가 완화, 성장주에 할인율 부담 완화. 반대로 정유·조선 등 고유가 수혜 업종은 역풍.</li>
+            <li><b>FOMC 결과는 한국시간 7/30(목) 새벽 발표.</b> 동결 전망이 우세하나 <b>0.25%p 인상 확률 29.4%, 9월 인상 확률 80.8%</b>로 매파 리스크가 살아 있음 — 오늘 장은 결과 대기 속 관망세가 섞일 공산.</li>
+            <li><b>글로벌 빅테크 실적 러시 본격화.</b> 오늘 밤 마이크로소프트·메타, 30일 삼성전자(부문별 상세)·아마존·애플. <b>하이퍼스케일러의 AI 캐펙스 계획 축소 여부</b>가 국내 반도체 밸류체인에 직결.</li>
+            <li><b>주간 코스피 예상 밴드는 6,300~7,400p</b>로 제시됐으나 <b>이미 하단(6,023)을 크게 이탈</b>한 상태 — 기존 밴드 전망의 유효성 자체가 흔들린 만큼 <b>변동성 확대를 전제로 한 리스크 관리</b>가 우선.</li>
+          </ul>
+        </section>
+
+      </div>
+    </details>
+
+    <details class="day" id="d-2026-07-28">
+      <summary>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        <span class="date-badge"><span class="d">7/28</span><span class="w">화요일</span></span>
+        <span class="headline">반등 하루 만에 '중국 DUV 쇼크' — SOX -4.25%·엔비디아 -5%, 유가 -7.5% 급락은 완충재</span>
+        <span class="sum-chips">
+          <span class="mini up"><span class="lab">코스피</span><span class="v">+0.97%</span></span>
+          <span class="mini up"><span class="lab">코스닥</span><span class="v">+2.22%</span></span>
+        </span>
+      </summary>
+      <div class="body">
+
+        <section class="block">
+          <h3>🌙 간밤 미국 증시 <span class="k">7/27(월) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx up"><div class="idx-top"><span class="nm">다우존스</span><span class="arw">▲</span></div><div class="val tnum">52,210.08</div><div class="chg-row"><span class="chg-pt tnum">+262.83</span><span class="chg-pct tnum">+0.51%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">S&amp;P 500</span><span class="arw">▲</span></div><div class="val tnum">7,413.18</div><div class="chg-row"><span class="chg-pt tnum">+1.20</span><span class="chg-pct tnum">+0.02%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">나스닥</span><span class="arw">▼</span></div><div class="val tnum">24,932.08</div><div class="chg-row"><span class="chg-pt tnum">-43.74</span><span class="chg-pct tnum">-0.18%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">WTI 유가</span><span class="arw">▼</span></div><div class="val tnum">$82.61</div><div class="chg-row"><span class="chg-pt tnum">-6.70</span><span class="chg-pct tnum">-7.50%</span></div></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">필라델피아 반도체 <b class="down">-4.25%</b></span>
+            <span class="stk">엔비디아 <b class="down">-4.99%</b></span>
+            <span class="stk">ASML <b class="down">-7.07%</b></span>
+            <span class="stk">AMD <b class="down">-5.17%</b></span>
+            <span class="stk">마이크론 <b class="down">-2.25%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>다우·S&amp;P는 2거래일 연속 상승, 나스닥은 4거래일 연속 하락</b>하며 혼조 마감. 지수는 잔잔했지만 <b>내부는 반도체 패닉셀</b>이 지배한 하루.</li>
+            <li>직접적 방아쇠는 <b>중국의 DUV 노광장비 양산 착수 보도</b> — 상하이의 정부 지원 기업이 SMIC·화홍반도체·<b>CXMT</b> 등에 연내 첫 물량(약 5대, 내년 20대 목표) 인도 예정. <b>ASML -7.07%($1,632.84)</b> 급락이 반도체 밸류체인 전반으로 번짐.</li>
+            <li>엔비디아는 <b>-4.99%($196.51)</b>, <b>SOX -4.25%</b>. AMD·테라다인도 4~5%대 하락 — <b>국내 반도체 대형주에 직접적인 갭 하락 압력</b>.</li>
+            <li>국제유가 급락 — <b>WTI 9월물 $82.61(-7.5%)</b>, <b>브렌트 9월물 $88.36(-8.7%)</b>. 트럼프 대통령이 <b>대이란 공습 일시 중단</b>을 지시하고 이란도 호응하며 2주간의 중동 리스크가 급속 완화.</li>
+            <li>미 국채금리 하락 — <b>10년물 4.639%</b>(전일 4.68%대). 유가 급락에 인플레 부담이 덜어지며 <b>FOMC 대기 모드</b>로 진입.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>📊 코스피 · 코스닥 <span class="k">7/27(월) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx up"><div class="idx-top"><span class="nm">코스피</span><span class="arw">▲</span></div><div class="val tnum">6,755.75</div><div class="chg-row"><span class="chg-pt tnum">+65.13</span><span class="chg-pct tnum">+0.97%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">코스닥</span><span class="arw">▲</span></div><div class="val tnum">764.86</div><div class="chg-row"><span class="chg-pt tnum">+16.64</span><span class="chg-pct tnum">+2.22%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">원/달러 환율</span><span class="arw">▼</span></div><div class="val tnum">1,468.5</div><div class="chg-row"><span class="chg-pt tnum">+1.9원</span><span class="chg-pct">원화 약세</span></div></div>
+          </div>
+          <div class="kv" style="margin:8px 0 12px">'검은 금요일' 다음 거래일, 코스피 <b>+65.13p</b> 반등하며 <b>6,700선 회복</b> · 다만 외국인은 <b>2조 9,037억 순매도</b>로 이틀째 대량 매도.</div>
+          <div class="flow">
+            <div class="f sell"><span class="lab">외국인 · 코스피</span><span class="amt tnum">-2조 9,037억</span><span class="note">이틀 연속 대량 매도</span></div>
+            <div class="f buy"><span class="lab">기관 · 코스피</span><span class="amt tnum">+8,627억</span></div>
+            <div class="f buy"><span class="lab">개인 · 코스피</span><span class="amt tnum">+1조 9,793억</span><span class="note">이틀째 저가 매수</span></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">삼성전자 <b class="up">+1.80%</b></span>
+            <span class="stk">SK하이닉스 <b class="up">+3.24%</b></span>
+          </div>
+          <ul class="notes">
+            <li>중동 긴장 완화로 <b>상승 출발했으나 장중 외국인 매도 확대에 하락 전환</b>, 오후 개인·기관 매수세가 재유입되며 <b>강보합 마감</b>하는 롤러코스터 장세.</li>
+            <li>반도체 대형주가 낙폭을 만회 — 삼성전자 <b>254,000원(+1.80%)</b>, SK하이닉스 <b>1,816,000원(+3.24%)</b>. 삼성전자는 장중 246,000원, SK하이닉스는 1,707,000원까지 밀렸다가 되돌림.</li>
+            <li>코스닥은 <b>기관 +2,727억</b> 순매수가 견인. 개인 <b>-1,295억</b>, 외국인 <b>-1,440억</b> 순매도로 코스피와 수급 구도가 반대.</li>
+            <li>원/달러는 <b>1,459.9원에 하락 출발</b>했으나 외국인 주식 순매도가 확대되며 <b>1,468.5원(+1.9원)</b>으로 상승 전환 마감.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>🔎 오늘의 관전 포인트 <span class="k">7/28(화)</span></h3>
+          <ul class="notes">
+            <li><b>중국 DUV 쇼크의 국내 전이 여부가 최대 변수.</b> 간밤 SOX -4.25%·엔비디아 -5%는 <b>반도체 대형주 갭 하락</b> 요인. 전일 반등분(삼성전자 +1.8%, SK하이닉스 +3.2%)의 되돌림 압력에 유의.</li>
+            <li><b>다만 이슈의 성격은 '장비'와 '중국 자립'.</b> 직접 타격은 ASML 등 장비주이고, 메모리는 <b>CXMT의 중장기 증설 여력</b>이라는 간접 경로. 시장이 이를 단기 심리 이슈로 볼지 구조적 경쟁 심화로 볼지가 갈림길.</li>
+            <li><b>유가 -7.5%·미 금리 4.64% 하락은 명백한 우호 재료.</b> 항공·운송·소비·내수주에는 원가 완화, 성장주에는 할인율 부담 완화. 정유·조선 등 고유가 수혜주는 반대 방향.</li>
+            <li><b>외국인 수급이 관건.</b> 이틀간 코스피에서만 6조 원 넘게 순매도. 지수는 개인·기관이 받쳐 올렸지만, 외국인 매도가 3거래일째 이어지면 반등 지속력은 제한적.</li>
+            <li><b>내일(29일) SK하이닉스, 30일 삼성전자 2분기 실적.</b> SK하이닉스 영업이익률은 역대 최고 수준이 컨센서스 — <b>실적 자체보다 하반기 가이던스·메모리 가격 코멘트</b>가 주가를 좌우.</li>
+            <li><b>FOMC 오늘부터 이틀간(현지 7/28~29), 결과는 한국시간 7/30 새벽.</b> 동결 전망이 우세하며 금리 경로 힌트가 핵심. 오늘 밤 미국 <b>컨퍼런스보드 소비자신뢰지수</b> 발표.</li>
+            <li><b>글로벌 빅테크 실적 러시.</b> 30일 메타·마이크로소프트, 31일 아마존. AI 캐펙스가 실제 수익으로 연결되는지 확인 구간.</li>
+            <li><b>증권가 이번 주 코스피 예상 밴드는 6,700~7,600p</b>로 여전히 넓게 열려 있음 — 이벤트 밀집 구간인 만큼 변동성 확대 자체를 전제로 대응 필요.</li>
+          </ul>
+        </section>
+
+      </div>
+    </details>
+
+    <details class="day" id="d-2026-07-27">
+      <summary>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        <span class="date-badge"><span class="d">7/27</span><span class="w">월요일</span></span>
+        <span class="headline">'검은 금요일' -5.72% 급락 후 반등 시험 — 유가 급락은 위안, FOMC·반도체 실적 주간</span>
+        <span class="sum-chips">
+          <span class="mini down"><span class="lab">코스피</span><span class="v">-5.72%</span></span>
+          <span class="mini down"><span class="lab">코스닥</span><span class="v">-5.32%</span></span>
+        </span>
+      </summary>
+      <div class="body">
+
+        <section class="block">
+          <h3>🌙 간밤 미국 증시 <span class="k">7/24(금) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx up"><div class="idx-top"><span class="nm">다우존스</span><span class="arw">▲</span></div><div class="val tnum">51,946.51</div><div class="chg-row"><span class="chg-pt tnum">+234.86</span><span class="chg-pct tnum">+0.45%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">S&amp;P 500</span><span class="arw">▲</span></div><div class="val tnum">7,411.96</div><div class="chg-row"><span class="chg-pt tnum">+3.66</span><span class="chg-pct tnum">+0.05%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">나스닥</span><span class="arw">▼</span></div><div class="val tnum">24,975.82</div><div class="chg-row"><span class="chg-pt tnum">-161.87</span><span class="chg-pct tnum">-0.64%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">WTI 유가</span><span class="arw">▼</span></div><div class="val tnum">$88.93</div><div class="chg-row"><span class="chg-pt">배럴당</span><span class="chg-pct tnum">-3.54%</span></div></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">엔비디아 <b class="down">-1.72%</b></span>
+            <span class="stk">인텔 <b class="down">-6.5%</b></span>
+            <span class="stk">샌디스크 <b class="down">-11%</b></span>
+            <span class="stk">기술업종 <b class="down">-2.37%</b></span>
+          </div>
+          <ul class="notes">
+            <li>변동성 컸던 한 주의 마지막 날, <b>다우는 반등·S&amp;P는 강보합·나스닥은 하락</b>하며 혼조 마감. <b>AI 자본지출(캐펙스) 부담</b> 우려가 기술주를 계속 압박.</li>
+            <li>국제유가 급락 — <b>WTI $88.93(-3.54%)</b>, <b>브렌트 $96.88(-3.8%)</b>. 주중 중동 긴장으로 배럴당 100달러를 넘어 7주 최고까지 올랐다가 되돌림 → <b>인플레 부담 일부 완화</b>.</li>
+            <li>미 국채금리 하락 — <b>10년물 4.68%(-2.4bp)</b>. 전일 4.71%대(2025년 1월 이후 최고) 찍은 뒤 진정.</li>
+            <li>메모리·반도체는 약세 — 샌디스크 약 <b>-11%</b>, 인텔은 <b>실적 상회에도 -6.5%</b>. <b>국내 반도체 대형주에는 부담</b> 요인.</li>
+            <li>BofA 불·베어 지표가 <b>2021년 이후 최고 수준</b>까지 올라와 과열 경계 신호도 함께 거론됨.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>📊 코스피 · 코스닥 <span class="k">7/24(금) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx down"><div class="idx-top"><span class="nm">코스피</span><span class="arw">▼</span></div><div class="val tnum">6,690.62</div><div class="chg-row"><span class="chg-pt tnum">-406.27</span><span class="chg-pct tnum">-5.72%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">코스닥</span><span class="arw">▼</span></div><div class="val tnum">748.22</div><div class="chg-row"><span class="chg-pt tnum">-42.06</span><span class="chg-pct tnum">-5.32%</span></div></div>
+            <div class="idx flat"><div class="idx-top"><span class="nm">원/달러 환율</span><span class="arw">▬</span></div><div class="val tnum">1,466.6</div><div class="chg-row"><span class="chg-pt tnum">-0.2원</span><span class="chg-pct">장중 1,475원대</span></div></div>
+          </div>
+          <div class="kv" style="margin:8px 0 12px">코스피 <b>-406.27p</b> 급락하며 <b>7,000선·6,700선 동시 붕괴</b> · 외국인·기관 합산 <b>약 5조 2,300억 순매도</b>의 '검은 금요일'.</div>
+          <div class="flow">
+            <div class="f sell"><span class="lab">외국인 · 코스피</span><span class="amt tnum">-3조 2,828억</span><span class="note">순매수 흐름 반전</span></div>
+            <div class="f sell"><span class="lab">기관 · 코스피</span><span class="amt tnum">-1조 9,513억</span></div>
+            <div class="f buy"><span class="lab">개인 · 코스피</span><span class="amt tnum">+5조 1,783억</span><span class="note">저가 매수</span></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">삼성전자 <b class="down">-7.59%</b></span>
+            <span class="stk">SK하이닉스 <b class="down">-8.34%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>중동발 지정학 리스크</b>와 간밤 미 증시 급락(나스닥 -2.15%)이 겹치며 <b>지수 전반 투매</b>. 반도체 대형주가 낙폭을 키움 — 삼성전자 249,500원, SK하이닉스 1,759,000원 마감.</li>
+            <li>코스닥도 외국인 <b>-1,335억</b>, 기관 <b>-3,587억</b> 순매도, 개인 <b>+4,888억</b> 순매수로 같은 구도.</li>
+            <li>원/달러는 <b>1,466.6원 보합권 마감</b>. 장중 1,475원대까지 급등했으나 SK하이닉스 ADR 관련 수급과 수출기업 달러 매도로 되밀림.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>🔎 오늘의 관전 포인트 <span class="k">7/27(월)</span></h3>
+          <ul class="notes">
+            <li><b>기술적 반등 시도 vs 외국인 매도 지속.</b> 증권가 이번 주 코스피 예상 밴드는 <b>6,700~7,600p</b>. 금요일 3조 원 넘게 판 외국인이 되돌아오는지가 최대 변수.</li>
+            <li><b>유가 급락(-3.5%)과 미 금리 안정은 우호적.</b> 다만 나스닥·메모리주 약세는 <b>반도체 대형주 갭 하락</b> 요인 — 상반된 재료가 맞붙는 하루.</li>
+            <li><b>이번 주 국내 반도체 실적 분수령.</b> 29일 <b>SK하이닉스</b>, 30일 <b>삼성전자</b> 2분기 실적. 장기공급계약·메모리 수요와 수익성 코멘트가 핵심.</li>
+            <li><b>FOMC(현지 7/28~29, 결과 한국시간 7/30 새벽 3시·파월 회견 3:30).</b> 동결 전망이 우세하며, 향후 금리 경로 힌트에 시선 집중.</li>
+            <li><b>글로벌 빅테크 실적 러시.</b> 메타·마이크로소프트·아마존·애플 — AI 설비투자 확대가 실제 매출·수익성으로 연결되는지 확인 필요.</li>
+            <li><b>매크로·해외 중앙은행.</b> 미국 2분기 GDP와 PCE 물가, 영국·일본 중앙은행 통화정책회의가 주중 대기.</li>
+            <li><b>중동 정세와 환율.</b> 유가 되돌림이 이어질지, 원/달러가 1,470원선 위로 재차 올라설지 여부가 외국인 수급을 좌우.</li>
+          </ul>
+        </section>
+
+      </div>
+    </details>
+
+    <details class="day" id="d-2026-07-24">
+      <summary>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        <span class="date-badge"><span class="d">7/24</span><span class="w">금요일</span></span>
+        <span class="headline">코스피 7,000선 안착 시험 — 간밤 뉴욕 기술주 급락·유가 급등이 변수</span>
+        <span class="sum-chips">
+          <span class="mini up"><span class="lab">코스피</span><span class="v">+4.39%</span></span>
+          <span class="mini up"><span class="lab">코스닥</span><span class="v">+5.22%</span></span>
+        </span>
+      </summary>
+      <div class="body">
+
+        <section class="block">
+          <h3>🌙 간밤 미국 증시 <span class="k">7/23(목) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx down"><div class="idx-top"><span class="nm">다우존스</span><span class="arw">▼</span></div><div class="val tnum">51,711.65</div><div class="chg-row"><span class="chg-pt tnum">-506.93</span><span class="chg-pct tnum">-0.97%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">S&amp;P 500</span><span class="arw">▼</span></div><div class="val tnum">7,408.30</div><div class="chg-row"><span class="chg-pt tnum">-90.66</span><span class="chg-pct tnum">-1.21%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">나스닥</span><span class="arw">▼</span></div><div class="val tnum">25,137.69</div><div class="chg-row"><span class="chg-pt tnum">-553.21</span><span class="chg-pct tnum">-2.15%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">필라델피아 반도체</span><span class="arw">▼</span></div><div class="val tnum">SOX</div><div class="chg-row"><span class="chg-pt">지수</span><span class="chg-pct tnum">-0.54%</span></div></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">알파벳 <b class="down">-7.13%</b></span>
+            <span class="stk">테슬라 <b class="down">-14.52%</b></span>
+            <span class="stk">엔비디아 <b class="down">-1.56%</b></span>
+            <span class="stk">AMD <b class="down">-2.29%</b></span>
+            <span class="stk">인텔 <b class="up">+8.68%</b><span class="tag-out">시간외</span></span>
+          </div>
+          <ul class="notes">
+            <li>3대 지수 <b>동반 하락</b>. 알파벳·테슬라 실적이 <b>AI 자본지출(캐펙스) 부담</b> 우려를 되살리며 기술주 전반 약세.</li>
+            <li>국제유가 급등 — <b>WTI 8월물 $92.19(+6.2%)</b>, 브렌트 9월물 $100.69(+7%). 중동 분쟁 격화에 배럴당 100달러 돌파 → <b>인플레 재점화</b> 우려.</li>
+            <li>미 국채금리 상승 — <b>10년물 4.697%(+4bp)</b>, 장중 4.71%대. 2년물 4.358%. 성장주 밸류에이션에 부담.</li>
+            <li>다만 반도체지수(SOX) 낙폭은 <b>-0.54%로 제한적</b>, 인텔은 시간외 급등 → 반도체 투심은 상대적으로 견조.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>📊 코스피 · 코스닥 <span class="k">7/23(목) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx up"><div class="idx-top"><span class="nm">코스피</span><span class="arw">▲</span></div><div class="val tnum">7,096.89</div><div class="chg-row"><span class="chg-pt tnum">+299.19</span><span class="chg-pct tnum">+4.39%</span></div></div>
+            <div class="idx up"><div class="idx-top"><span class="nm">코스닥</span><span class="arw">▲</span></div><div class="val tnum">790.28</div><div class="chg-row"><span class="chg-pt tnum">+39.19</span><span class="chg-pct tnum">+5.22%</span></div></div>
+            <div class="idx flat"><div class="idx-top"><span class="nm">원/달러 환율</span><span class="arw">▼</span></div><div class="val tnum">1,466.8</div><div class="chg-row"><span class="chg-pt tnum">-13.3원</span><span class="chg-pct">원화 강세</span></div></div>
+          </div>
+          <div class="kv" style="margin:8px 0 12px">코스피 <b>+299.19p</b> 급등하며 <b>7,000선 탈환</b> · 코스닥은 오후 2:27 <b>매수 사이드카 발동</b>(7/15 이후 처음).</div>
+          <div class="flow">
+            <div class="f buy"><span class="lab">외국인 · 코스피</span><span class="amt tnum">+2조 5,405억</span><span class="note">4거래일 연속 순매수</span></div>
+            <div class="f buy"><span class="lab">기관 · 코스피</span><span class="amt tnum">+561억</span></div>
+            <div class="f sell"><span class="lab">개인 · 코스피</span><span class="amt tnum">-2조 5,552억</span><span class="note">차익 실현</span></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">삼성전자 <b class="up">+3.65%</b></span>
+            <span class="stk">SK하이닉스 <b class="up">+4.86%</b></span>
+            <span class="stk">삼성전기 <b class="up">+7.66%</b></span>
+            <span class="stk">LG에너지솔루션 <b class="up">+8.41%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>외국인·기관 동반 매수</b>가 지수를 견인, 개인은 차익 실현 매물. 반도체·2차전지 대형주가 상승 주도.</li>
+            <li>원/달러는 <b>13.3원 하락(원화 강세)</b> — 외국인 수급에 우호적 환경.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>🔎 오늘의 관전 포인트 <span class="k">7/24(금)</span></h3>
+          <ul class="notes">
+            <li><b>전일 급등 후 조정 압력 vs 외국인 매수 지속.</b> 간밤 나스닥 -2.15% 급락으로 <b>갭 하락 출발 가능성</b>. 4거래일 연속 순매수한 외국인의 흐름이 유지될지가 최대 관건.</li>
+            <li><b>유가 급등發 인플레 부담.</b> WTI $90선·브렌트 $100 돌파 → 정유·조선 등 수혜 vs 항공·운송·소비 부담. 물가·금리 경로에 영향.</li>
+            <li><b>미 금리 상승(10년물 4.7% 근접).</b> 고밸류 성장주·바이오·2차전지 변동성 확대 유의.</li>
+            <li><b>대미 관세·무역 헤드라인 리스크.</b> 반도체·자동차·조선 등 대미 수출 의존 업종은 관련 발언에 민감하게 반응할 수 있음.</li>
+            <li><b>반도체 실적 시즌.</b> DRAM·NAND 호황 지속 기대가 삼성전자·SK하이닉스의 하방 지지선. SOX 견조가 위안.</li>
+          </ul>
+        </section>
+
+      </div>
+    </details>
+
+  </main>
+
+  <footer class="bot">
+    한국 증시 아침 브리핑 일지 · 매일 개장 1시간 전(오전 8시) 자동 갱신 · <b>투자 권유 아님</b><br>
+    출처: 이투데이 · 파이낸셜뉴스 · 뉴스핌 · 뉴스1 · 연합뉴스 · 글로벌이코노믹 · Bloomberg · Yahoo Finance 등 (7/28 오전 조사 기준)
+  </footer>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeBtn');
+  var saved=localStorage.getItem('kmj-theme');
+  var init = saved ? saved : ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light':'dark');
+  root.setAttribute('data-theme', init);
+  if(btn) btn.textContent = init==='light' ? '🌙' : '☀️';
+  window.toggleTheme=function(){
+    var next = root.getAttribute('data-theme')==='light' ? 'dark':'light';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('kmj-theme', next);
+    if(btn) btn.textContent = next==='light' ? '🌙':'☀️';
+  };
+})();
+
+/* 오늘의 개장 전망 막대그래프 렌더러 — data-kospi / data-kosdaq(부호 포함 %) 값으로 발산형 막대를 그림 */
+(function(){
+  var FULL = 2.5; /* 이 %면 막대가 중앙에서 끝까지(절반) 참 */
+  function render(){
+    var el = document.getElementById('outlook'); if(!el) return;
+    var host = document.getElementById('olBars'); if(!host) return;
+    var items = [{k:'kospi',n:'코스피'},{k:'kosdaq',n:'코스닥'}];
+    host.innerHTML = '';
+    items.forEach(function(it){
+      var v = parseFloat(el.getAttribute('data-'+it.k)); if(isNaN(v)) v = 0;
+      var dir = v>0.03 ? 'up' : (v<-0.03 ? 'down' : 'flat');
+      var w = (Math.min(Math.abs(v), FULL)/FULL)*50; /* 트랙 전체폭 대비 % */
+      var arrow = dir==='up' ? '▲' : (dir==='down' ? '▼' : '■');
+      var txt = (v>0?'+':'') + v.toFixed(2) + '%';
+      var row = document.createElement('div');
+      row.className = 'ol-row ' + dir;
+      row.innerHTML =
+        '<div class="ol-name">'+it.n+'</div>'+
+        '<div class="ol-gauge"><div class="ol-center"></div><div class="ol-fill" style="width:'+w+'%"></div></div>'+
+        '<div class="ol-val">'+arrow+' '+txt+'</div>';
+      host.appendChild(row);
+    });
+    var d = document.getElementById('olDate'); if(d) d.textContent = (el.getAttribute('data-date')||'') + ' · 추정치';
+    var b = document.getElementById('olBasis'); if(b) b.innerHTML = el.getAttribute('data-basis') || '';
+  }
+  if(document.readyState !== 'loading') render();
+  else document.addEventListener('DOMContentLoaded', render);
+  window.renderOutlook = render;
+})();
+
+/* 날짜별 바로가기: 카드에서 최근 N일 칩 + 달력 팝오버를 자동 생성 */
+(function(){
+  var RECENT = 7; /* 최근 며칠치를 빠른 링크로 노출 */
+  var all, byYmd, months, curMonth;
+  function pad(n){ n=String(n); return n.length<2 ? '0'+n : n; }
+  function collect(){
+    var els = document.querySelectorAll('main details.day');
+    var out = [];
+    Array.prototype.forEach.call(els, function(el){
+      var ymd = (el.id||'').replace(/^d-/,'');
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(ymd)) return;
+      var p = ymd.split('-');
+      var d = el.querySelector('.date-badge .d');
+      var w = el.querySelector('.date-badge .w');
+      out.push({ el:el, id:el.id, ymd:ymd, y:+p[0], m:+p[1], day:+p[2],
+        label: d?d.textContent.trim():(+p[1]+'/'+ +p[2]),
+        wd: w?w.textContent.trim():'' });
+    });
+    out.sort(function(a,b){ return a.ymd<b.ymd?1:(a.ymd>b.ymd?-1:0); }); /* 최신순 */
+    return out;
+  }
+  function goTo(c){ if(!c) return; if(c.el.tagName==='DETAILS') c.el.open=true; c.el.scrollIntoView({behavior:'smooth',block:'start'}); }
+  function buildRecent(){
+    var host=document.getElementById('tocRecent'); if(!host) return;
+    host.innerHTML='';
+    all.slice(0,RECENT).forEach(function(c){
+      var a=document.createElement('a');
+      a.href='#'+c.id;
+      a.textContent=c.label+(c.wd?' ('+c.wd.charAt(0)+')':'');
+      a.addEventListener('click',function(e){ e.preventDefault(); goTo(c); });
+      host.appendChild(a);
+    });
+    var hint=document.getElementById('tocHint');
+    if(hint) hint.textContent='· 최근 '+Math.min(RECENT,all.length)+'일 · 이전 기록은 달력에서';
+    var fb=document.getElementById('tocFallback'); if(fb) fb.hidden=true;
+  }
+  function renderCal(){
+    var grid=document.getElementById('calGrid'); if(!grid) return;
+    grid.innerHTML='';
+    ['일','월','화','수','목','금','토'].forEach(function(d,i){
+      var c=document.createElement('div');
+      c.className='cal-dow'+(i===0?' sun':(i===6?' sat':''));
+      c.textContent=d; grid.appendChild(c);
+    });
+    var y=curMonth.y, m=curMonth.m;
+    var first=new Date(y,m-1,1).getDay();
+    var days=new Date(y,m,0).getDate();
+    var todayYmd=all.length?all[0].ymd:'';
+    for(var i=0;i<first;i++){ var e=document.createElement('div'); e.className='cal-cell empty'; grid.appendChild(e); }
+    for(var dd=1;dd<=days;dd++){
+      var ymd=y+'-'+pad(m)+'-'+pad(dd);
+      var c=byYmd[ymd];
+      var cell=document.createElement('div');
+      cell.textContent=dd;
+      if(c){
+        cell.className='cal-cell has'+(ymd===todayYmd?' today':'');
+        cell.title=c.label+(c.wd?' ('+c.wd+')':'');
+        (function(cc){ cell.addEventListener('click',function(){ goTo(cc); closeCal(); }); })(c);
+      } else { cell.className='cal-cell'; }
+      grid.appendChild(cell);
+    }
+    var title=document.getElementById('calTitle'); if(title) title.textContent=y+'년 '+m+'월';
+    var pv=document.getElementById('calPrev'), nx=document.getElementById('calNext');
+    var cur=y*12+(m-1), lo=months[months.length-1], hi=months[0];
+    if(pv) pv.disabled = cur <= (lo.y*12+(lo.m-1));
+    if(nx) nx.disabled = cur >= (hi.y*12+(hi.m-1));
+  }
+  function stepMonth(delta){ var k=curMonth.y*12+(curMonth.m-1)+delta; curMonth={y:Math.floor(k/12),m:(k%12)+1}; renderCal(); }
+  function openCal(){ var p=document.getElementById('calPop'); if(p)p.hidden=false; var t=document.getElementById('calToggle'); if(t)t.setAttribute('aria-expanded','true'); }
+  function closeCal(){ var p=document.getElementById('calPop'); if(p)p.hidden=true; var t=document.getElementById('calToggle'); if(t)t.setAttribute('aria-expanded','false'); }
+  function build(){
+    all=collect(); if(!all.length) return;
+    byYmd={}; all.forEach(function(c){ byYmd[c.ymd]=c; });
+    months=[]; var seen={};
+    all.forEach(function(c){ var k=c.y+'-'+c.m; if(!seen[k]){ seen[k]=1; months.push({y:c.y,m:c.m}); } });
+    curMonth={y:all[0].y, m:all[0].m};
+    buildRecent(); renderCal();
+    var t=document.getElementById('calToggle'); if(t) t.onclick=function(){ var p=document.getElementById('calPop'); if(p&&p.hidden) openCal(); else closeCal(); };
+    var pv=document.getElementById('calPrev'); if(pv) pv.onclick=function(){ stepMonth(-1); };
+    var nx=document.getElementById('calNext'); if(nx) nx.onclick=function(){ stepMonth(1); };
+  }
+  if(document.readyState!=='loading') build();
+  else document.addEventListener('DOMContentLoaded', build);
+  window.buildNav = build;
+})();
+</script>
+</body>
+</html>
