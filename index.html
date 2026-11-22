@@ -277,10 +277,10 @@
 
   <!-- OUTLOOK_START :: 매일 자동 갱신 구역. 아래 <section>의 data-date / data-kospi / data-kosdaq / data-basis 4개 값만 오늘 데이터로 교체하면 막대그래프가 자동으로 다시 그려짐. data-kospi·data-kosdaq = 오늘 예상 등락률(%)을 부호 포함 숫자로(상승 +, 하락 -). -->
   <section class="outlook" id="outlook"
-           data-date="11/20 (금)"
-           data-kospi="-1.80"
-           data-kosdaq="-2.00"
-           data-basis="간밤 뉴욕 3대 지수 2%대 급락(<b>나스닥 -2.25%</b>)과 앤트로픽 상장 이후 AI·반도체 투매(<b>필라델피아 반도체 -2.42%, 엔비디아 -3.3%</b>)를 반영해 <b>하락 출발</b>을 추정함. 전일 코스닥 +3.32% 급등분 되돌림 가능성, 원화 강세(1,330원 안팎)는 일부 완충. 야간선물 종가는 확인하지 못함.">
+           data-date="11/23 (월)"
+           data-kospi="-5.00"
+           data-kosdaq="-5.50"
+           data-basis="<b>코스피200 야간선물 -7.01%</b>, 간밤 엔비디아 SEC 회계조사 보도에 <b>필라델피아 반도체 -10.73%·나스닥 -5.28%</b> 폭락을 반영해 <b>큰 폭 하락 출발</b>을 추정함. 금요일 국내장 5%대 급락의 선반영과 정부 증안펀드 준비는 일부 완충 요인.">
     <div class="ol-head">
       <div class="ol-title">
         <span class="ol-ic">🧭</span>
@@ -323,6 +323,7 @@
     <!-- 자바스크립트 미실행 시 대체 목록(자동화가 TOC_INSERT 뒤에 계속 추가). JS 실행 시 숨겨짐 -->
     <div class="links toc-fallback" id="tocFallback">
       <!-- TOC_INSERT -->
+      <a href="#d-2026-11-23">11/23 (월)</a>
       <a href="#d-2026-11-20">11/20 (금)</a>
       <a href="#d-2026-11-19">11/19 (목)</a>
       <a href="#d-2026-11-18">11/18 (수)</a>
@@ -397,7 +398,78 @@
 
   <main>
     <!-- ENTRY_INSERT -->
-    <details class="day" open id="d-2026-11-20">
+    <details class="day" open id="d-2026-11-23">
+      <summary>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        <span class="date-badge"><span class="d">11/23</span><span class="w">월요일</span></span>
+        <span class="headline"><b>코스피 -5.21% 4,869.96으로 5,000선 붕괴·코스닥 -5.72% 645.66, 양 시장 매도 사이드카 — 간밤 뉴욕은 엔비디아 SEC 회계조사 보도에 -14%, 필라델피아 반도체 -10.73%, 나스닥 -5.28%·S&amp;P500 -3.70%·다우 -1.93%로 S&amp;P500·다우 조정 국면 진입</b> — 직전 거래일(11/20) <b>코스피 4,869.96(-5.21%)</b>, <b>코스닥 645.66(-5.72%)</b>, 삼성전자 -7.01%·SK하이닉스 -5.92%, 원/달러 1,336.2원 · 코스피200 야간선물 <b>-7.01%</b> · 오늘 <b>코스피·코스닥 큰 폭 하락 출발 추정</b> · 개장 직후 사이드카 가능성, F4 증시안정책, 외국인 수급</span>
+        <span class="sum-chips">
+          <span class="mini down"><span class="lab">코스피</span><span class="v">-5.21%</span></span>
+          <span class="mini down"><span class="lab">코스닥</span><span class="v">-5.72%</span></span>
+        </span>
+      </summary>
+      <div class="body">
+
+        <section class="block">
+          <h3>🌙 간밤 미국 증시 <span class="k">11/20(금) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx down"><div class="idx-top"><span class="nm">다우존스</span><span class="arw">▼</span></div><div class="val tnum">48,147.33</div><div class="chg-row"><span class="chg-pt tnum">-949.73</span><span class="chg-pct tnum">-1.93%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">S&amp;P 500</span><span class="arw">▼</span></div><div class="val tnum">6,910.39</div><div class="chg-row"><span class="chg-pt tnum">-265.44</span><span class="chg-pct tnum">-3.70%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">나스닥</span><span class="arw">▼</span></div><div class="val tnum">22,617.73</div><div class="chg-row"><span class="chg-pt tnum">-1,261.47</span><span class="chg-pct tnum">-5.28%</span></div></div>
+            <div class="idx flat"><div class="idx-top"><span class="nm">미 10년물</span><span class="arw">▼</span></div><div class="val tnum">4.92%</div><div class="chg-row"><span class="chg-pt tnum">약 -13bp</span><span class="chg-pct">안전자산 선호, 2년물 4.63%</span></div></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">엔비디아 <b class="down">-14.01%</b></span>
+            <span class="stk">AMD <b class="down">-13.25%</b></span>
+            <span class="stk">필라델피아 반도체 <b class="down">-10.73%</b></span>
+            <span class="stk">VIX <b class="up">35.89</b></span>
+            <span class="stk">WTI <b class="up">$83.98</b></span>
+            <span class="stk">브렌트 <b class="up">$92.57</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>S&amp;P500·다우 조정 국면, 나스닥 올해 상승분 반납.</b> <b>다우 -1.93%(-949.73p) 48,147.33</b>, <b>S&amp;P500 -3.70%(-265.44p) 6,910.39</b>, <b>나스닥 -5.28%(-1,261.47p) 22,617.73</b>. S&amp;P500·다우는 고점 대비 10% 넘게 하락했고, S&amp;P500은 7거래일 연속 하락(2020년 2월 이후 최장). 주간으로 S&amp;P500 약 -8.4~8.6%, 나스닥 약 -10%. VIX 35.89.</li>
+            <li><b>엔비디아 회계 의혹이 AI·반도체 투매로.</b> SEC 집행 담당 직원이 엔비디아 회계 처리를 살펴보고 있다는 로이터 보도 뒤 <b>엔비디아 -14.01%</b>, AMD -13.25%, <b>필라델피아 반도체지수 -10.73%</b>. 전날 상장한 앤트로픽도 하락.</li>
+            <li><b>금리 급락·유가 반등.</b> 美 10년물 4.92%(주초 5.15%에서 하락), 2년물 4.63%로 안전자산 쏠림. 중동 긴장으로 <b>WTI 83.98달러</b>, <b>브렌트 92.57달러</b>로 반등했으나 3주 연속 주간 하락(WTI 12월물 만기일로 매체별 수치 차이).</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>📊 코스피 · 코스닥 <span class="k">11/20(금) 마감</span></h3>
+          <div class="idx-grid">
+            <div class="idx down"><div class="idx-top"><span class="nm">코스피</span><span class="arw">▼</span></div><div class="val tnum">4,869.96</div><div class="chg-row"><span class="chg-pt tnum">-267.93</span><span class="chg-pct tnum">-5.21%</span></div></div>
+            <div class="idx down"><div class="idx-top"><span class="nm">코스닥</span><span class="arw">▼</span></div><div class="val tnum">645.66</div><div class="chg-row"><span class="chg-pt tnum">-39.15</span><span class="chg-pct tnum">-5.72%</span></div></div>
+            <div class="idx flat"><div class="idx-top"><span class="nm">원/달러 환율</span><span class="arw">▲</span></div><div class="val tnum">1,336.2</div><div class="chg-row"><span class="chg-pt tnum">+6.2</span><span class="chg-pct">오후 3시30분 기준</span></div></div>
+          </div>
+          <div class="kv" style="margin:8px 0 12px">코스피는 4,928.51로 출발해 장중 4,831.69까지 밀린 뒤 <b>4,869.96(-267.93p, -5.21%)</b>으로 마감, 1월 20일 이후 최저이자 5,000선 붕괴. 코스닥은 <b>645.66(-39.15p, -5.72%)</b>. 양 시장에 매도 사이드카가 발동됐고, 원/달러는 6.2원 오른 1,336.2원.</div>
+          <div class="flow">
+            <div class="f sell"><span class="lab">외국인 · 코스피</span><span class="amt tnum">약 -1조1,416억~1조2,682억</span><span class="note">순매도</span></div>
+            <div class="f sell"><span class="lab">기관 · 코스피</span><span class="amt tnum">약 -3,499억~9,508억</span><span class="note">순매도</span></div>
+            <div class="f buy"><span class="lab">개인 · 코스피</span><span class="amt tnum">약 +1조6,182억</span><span class="note">순매수</span></div>
+          </div>
+          <div class="stocks">
+            <span class="stk">삼성전자 <b class="down">183,100원 -7.01%</b></span>
+            <span class="stk">SK하이닉스 <b class="down">1,113,000원 -5.92%</b></span>
+          </div>
+          <ul class="notes">
+            <li><b>외국인·기관 동반 투매, 개인 홀로 1.6조 매수.</b> 코스피 외국인은 6거래일 연속(매체에 따라 12거래일) 매도 우위. 기관 순매도 규모는 매체별 차이가 큼(한국경제 약 3,499억, 뉴시스 약 9,508억). 코스닥에서도 외국인 약 1,834억·기관 약 1,053억원 순매도, 개인 약 2,887억원 순매수.</li>
+            <li><b>반도체 대형주 급락.</b> 삼성전자 183,100원(-7.01%, 장중 181,400원), SK하이닉스 1,113,000원(-5.92%, 장중 1,096,000원). 외국인은 삼성전자만 약 4,324억원 순매도. 국내 증시는 美 금요일 폭락 전에 이미 5%대 하락한 상태.</li>
+          </ul>
+        </section>
+
+        <section class="block">
+          <h3>🔎 오늘의 관전 포인트 <span class="k">11/23(월)</span></h3>
+          <ul class="notes">
+            <li><b>개장 전망(추정): 코스피 약 -5.0%, 코스닥 약 -5.5% 하락 출발.</b> <b>코스피200 야간선물 -7.01%(700.00)</b>, 간밤 <b>필라델피아 반도체 -10.73%·엔비디아 -14%</b>가 하락 근거. 야간선물 낙폭을 대입하면 4,530선이지만 금요일 국내장이 이미 5%대 급락해 일부를 선반영했고, 정부의 증안펀드 준비 소식이 낙폭을 줄일 수 있어 야간선물보다는 작게 추정. 실제 시가·종가와 다를 수 있음.</li>
+            <li><b>개장 직후 사이드카·서킷브레이커 여부.</b> 코스피200 선물이 기준가 대비 5% 이상 1분간 움직이면 매도 사이드카가 발동되며, 야간선물 낙폭상 개장 직후 발동 가능성이 거론됨. 코스피 4,500선 지지 여부.</li>
+            <li><b>F4 회의 후속 조치.</b> 22일 긴급 거시경제·금융현안 점검회의(F4)에서 증안펀드 가동 준비, 24일부터 3개월간 상장사 자사주 매입 제한 완화, 불법 공매도 특별 감시가 거론됨(보도 기준). 실제 집행 시점과 규모가 투자심리에 영향.</li>
+            <li><b>엔비디아 SEC 조사 후속 보도와 외국인 수급.</b> 회계 의혹의 사실 여부·범위, 반도체주 반등 여부, 외국인 매도 지속 여부, 원/달러 1,330원대 흐름과 美 금리 하락 효과.</li>
+            <li><b>본 일지는 투자 참고용이며 특정 종목의 매수·매도 권유가 아님.</b> 수급·유가 수치는 매체별 집계가 다름. 美 10년물 전일 대비 변동폭은 직전 카드 수치(약 5.05%)와 비교한 추정치.</li>
+          </ul>
+        </section>
+
+      </div>
+    </details>
+    <details class="day" id="d-2026-11-20">
       <summary>
         <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
         <span class="date-badge"><span class="d">11/20</span><span class="w">금요일</span></span>
